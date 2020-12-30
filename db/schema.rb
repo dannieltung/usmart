@@ -10,10 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_30_003634) do
+ActiveRecord::Schema.define(version: 2020_12_30_211323) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "buyers", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "name"
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_buyers_on_user_id"
+  end
 
   create_table "categories", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
@@ -47,6 +55,8 @@ ActiveRecord::Schema.define(version: 2020_12_30_003634) do
     t.bigint "user_id"
     t.bigint "credit_card_id"
     t.bigint "category_id"
+    t.bigint "buyer_id"
+    t.index ["buyer_id"], name: "index_payments_on_buyer_id"
     t.index ["category_id"], name: "index_payments_on_category_id"
     t.index ["credit_card_id"], name: "index_payments_on_credit_card_id"
     t.index ["user_id"], name: "index_payments_on_user_id"
@@ -64,8 +74,10 @@ ActiveRecord::Schema.define(version: 2020_12_30_003634) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "buyers", "users"
   add_foreign_key "categories", "users"
   add_foreign_key "credit_cards", "users"
+  add_foreign_key "payments", "buyers"
   add_foreign_key "payments", "categories"
   add_foreign_key "payments", "credit_cards"
   add_foreign_key "payments", "users"
