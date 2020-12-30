@@ -23,17 +23,19 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
+    <% @payments.each do |payment| %>
+      <tr>
+        <td></td>
+        <td><%= payment.from %></td>
+        <td><%= payment.date %></td>
+        <td></td>
+        <td><%= payment.description %></td>
+        <td><%= payment.amount %></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    <% end %>
   </tbody>
 </table>
