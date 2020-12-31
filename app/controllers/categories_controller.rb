@@ -4,7 +4,7 @@ class CategoriesController < ApplicationController
   end
 
   def create
-    @category = Category.new
+    @category = Category.new(categories_params)
     @category.user = current_user
     if @category.save
       redirect_to root_path, notice: 'Category created!'
@@ -31,6 +31,7 @@ class CategoriesController < ApplicationController
   private
 
   def categories_params
+    params.require(:category).permit(:name)
   end
 
 end

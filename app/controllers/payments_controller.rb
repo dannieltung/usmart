@@ -4,7 +4,7 @@ class PaymentsController < ApplicationController
   end
 
   def create
-    @payment = Payment.new
+    @payment = Payment.new(payments_params)
     @payment.user = current_user
     if @payment.save
       redirect_to root_path, notice: 'Payment created!'
@@ -31,5 +31,6 @@ class PaymentsController < ApplicationController
   private
 
   def payments_params
+    params.require(:payment).permit(:amount, :total_partial, :comment, :date, :description)
   end
 end

@@ -4,7 +4,7 @@ class BuyersController < ApplicationController
   end
 
   def create
-    @buyer = Buyer.new
+    @buyer = Buyer.new(buyers_params)
     @buyer.user = current_user
     if @buyer.save
       redirect_to root_path, notice: 'Buyer created!'
@@ -31,5 +31,6 @@ class BuyersController < ApplicationController
   private
 
   def buyers_params
+    params.require(:buyer).permit(:name)
   end
 end
