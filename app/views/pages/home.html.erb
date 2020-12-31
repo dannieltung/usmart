@@ -7,6 +7,8 @@
       <%= f.association :category %>
       <%= f.input :description, label: 'Description' %>
       <%= f.input :amount, label: 'Amount' %>
+      <%= f.input :due_date, as: :date, html5: true, label: 'Due' %>
+      <!-- <= f.input :partial, label: 'Partial' %> -->
       <%= f.input :total_partial, label: '# of Payments' %>
       <%= f.input :comment, label: 'Comment' %>
       <%= f.submit "File It", class: 'btn btn-primary btn-lg btn-block' %>
