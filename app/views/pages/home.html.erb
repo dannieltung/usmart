@@ -1,7 +1,10 @@
 <div class="main-container">
   <div class="form">
     <%= simple_form_for [Payment.new] do |f| %>
+      <%= f.association :credit_card, label: 'Credit Card' %>
+      <%= f.association :buyer, label: 'From' %>
       <%= f.input :date, as: :date, html5: true, label: 'Date' %>
+      <%= f.association :category %>
       <%= f.input :description, label: 'Description' %>
       <%= f.input :amount, label: 'Amount' %>
       <%= f.input :total_partial, label: 'Total Partial' %>
