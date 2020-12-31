@@ -1,0 +1,6 @@
+<%= simple_form_for [CreditCard.new] do |f| %>
+  <%= f.input :name, label: 'Name' %>
+  <%= f.input :due_day, label: 'Due' %>
+  <%= f.input :best_day, label: 'Best Day' %>
+  <%= f.submit "Create It", class: 'btn btn-primary btn-lg btn-block' %>
+<% end %>
