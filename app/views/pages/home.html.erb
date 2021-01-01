@@ -1,16 +1,16 @@
 <div class="main-container">
   <div class="form">
     <%= simple_form_for [Payment.new] do |f| %>
-      <%= f.association :credit_card, label: 'Credit Card' %>
-      <%= f.association :buyer, label: 'From' %>
-      <%= f.input :date, as: :date, html5: true, label: 'Date' %>
-      <%= f.association :category %>
-      <%= f.input :description, label: 'Description' %>
-      <%= f.input :amount, label: 'Amount' %>
+      <%= f.association :credit_card, label: 'Cartão de Crédito' %>
+      <%= f.association :buyer, label: 'Comprador' %>
+      <%= f.input :date, as: :date, html5: true, label: 'Data' %>
+      <%= f.association :category, label: 'Categoria' %>
+      <%= f.input :description, label: 'Descrição' %>
+      <%= f.input :amount, label: 'Valor' %>
       <!-- <= f.input :due_date, as: :date, html5: true, label: 'Due' %> -->
       <!-- <= f.input :partial, label: 'Partial' %> -->
-      <%= f.input :total_partial, label: '# of Payments' %>
-      <%= f.input :comment, label: 'Comment' %>
+      <%= f.input :total_partial, label: 'Parcelamento' %>
+      <%= f.input :comment, label: 'Comentário' %>
       <%= f.submit "File It", class: 'btn btn-primary btn-lg btn-block' %>
     <% end %>
   </div>
@@ -18,16 +18,16 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th scope="col">Credit Card</th>
-        <th scope="col">From</th>
-        <th scope="col">Date</th>
-        <th scope="col">Category</th>
-        <th scope="col">Description</th>
-        <th scope="col">Amount</th>
-        <th scope="col">Due</th>
-        <th scope="col">Partial</th>
-        <th scope="col">Total Partial</th>
-        <th scope="col">Comment</th>
+        <th scope="col">Cartão de Crédito</th>
+        <th scope="col">Comprador</th>
+        <th scope="col">Data</th>
+        <th scope="col">Categoria</th>
+        <th scope="col">Descrição</th>
+        <th scope="col">Valor</th>
+        <th scope="col">Vencimento</th>
+        <th scope="col">Parcela</th>
+        <th scope="col">Total Parcelas</th>
+        <th scope="col">Comentário</th>
       </tr>
     </thead>
     <tbody>

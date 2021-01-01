@@ -5,6 +5,7 @@ class PaymentsController < ApplicationController
       @payment = Payment.new(payments_params)
       @payment.user = current_user
       @payment.partial = partial
+      @payment.description = params[:payment][:description].capitalize
       Date.parse(params[:payment][:date]) >= Date.today.change(day: CreditCard.find(params[:payment][:credit_card_id]).best_day) ? @payment.due_date = (Date.today + (partial + 1).month).change(day: CreditCard.find(params[:payment][:credit_card_id]).due_day) : @payment.due_date = (Date.today + partial.month).change(day: CreditCard.find(params[:payment][:credit_card_id]).due_day)
       @payment.save
       partial += 1
