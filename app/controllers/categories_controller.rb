@@ -6,6 +6,7 @@ class CategoriesController < ApplicationController
   def create
     @category = Category.new(categories_params)
     @category.user = current_user
+    @category.name = params[:category][:name].titleize
     if @category.save
       redirect_to root_path, notice: 'Category created!'
     else

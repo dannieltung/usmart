@@ -6,7 +6,6 @@ class PaymentsController < ApplicationController
       @payment.user = current_user
       @payment.partial = partial
       Date.parse(params[:payment][:date]) >= Date.today.change(day: CreditCard.find(params[:payment][:credit_card_id]).best_day) ? @payment.due_date = (Date.today + (partial + 1).month).change(day: CreditCard.find(params[:payment][:credit_card_id]).due_day) : @payment.due_date = (Date.today + partial.month).change(day: CreditCard.find(params[:payment][:credit_card_id]).due_day)
-      # a = Date.today.change(day: CreditCard.find(params[:payment][:credit_card_id]).best_day)
       @payment.save
       partial += 1
     end
@@ -16,16 +15,6 @@ class PaymentsController < ApplicationController
       render :new
     end
   end
-
-  # def create
-  #   @payment = Payment.new(payments_params)
-  #   @payment.user = current_user
-  #   if @payment.save
-  #     redirect_to root_path, notice: 'Payment created!'
-  #   else
-  #     render :new
-  #   end
-  # end
 
   def edit
   end

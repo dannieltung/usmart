@@ -6,6 +6,7 @@ class CreditCardsController < ApplicationController
   def create
     @credit_card = CreditCard.new(credit_cards_params)
     @credit_card.user = current_user
+    @credit_card.name = params[:credit_card][:name].titleize
     if @credit_card.save
       redirect_to root_path, notice: 'Credit Card created!'
     else
