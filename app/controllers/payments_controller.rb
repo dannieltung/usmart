@@ -1,12 +1,16 @@
 class PaymentsController < ApplicationController
   def create
-    b = params[:payment][:total_partial].to_i
+    partial = 1
     params[:payment][:total_partial].to_i.times do
       @payment = Payment.new(payments_params)
       @payment.user = current_user
-      @payment.partial = b
+      @payment.partial = partial
+      @payment.due_date = (Date.today + partial.month).change(day: CreditCard.find(params[:payment][:credit_card_id]).due_day)
+      b = Date.parse(params[:payment][:date]) < Date.today.change(day: CreditCard.find(params[:payment][:credit_card_id]).best_day)
+      # a = Date.today.change(day: CreditCard.find(params[:payment][:credit_card_id]).best_day)
+      raise
       @payment.save
-      b -= 1
+      partial += 1
     end
     if @payment.save
       redirect_to root_path, notice: 'Payment created!'
