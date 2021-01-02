@@ -9,16 +9,16 @@
       <%= f.input :amount, label: 'Valor' %>
       <!-- <= f.input :due_date, as: :date, html5: true, label: 'Due' %> -->
       <!-- <= f.input :partial, label: 'Partial' %> -->
-      <%= f.input :total_partial, label: 'Parcelamento' %>
+      <%= f.input :total_partial, label: '# de Parcelas' %>
       <%= f.input :comment, label: 'Comentário' %>
-      <%= f.submit "File It", class: 'btn btn-primary btn-lg btn-block' %>
+      <%= f.submit "Salvar", class: 'btn btn-primary btn-lg btn-block' %>
     <% end %>
   </div>
   <br>
   <table class="table table-striped">
     <thead>
       <tr>
-        <th scope="col">Cartão de Crédito</th>
+        <th scope="col">Cartão</th>
         <th scope="col">Comprador</th>
         <th scope="col">Data</th>
         <th scope="col">Categoria</th>
@@ -26,7 +26,7 @@
         <th scope="col">Valor</th>
         <th scope="col">Vencimento</th>
         <th scope="col">Parcela</th>
-        <th scope="col">Total Parcelas</th>
+        <th scope="col">Parcelas</th>
         <th scope="col">Comentário</th>
       </tr>
     </thead>
