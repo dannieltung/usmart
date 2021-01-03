@@ -1,13 +1,11 @@
 <%= simple_form_for [Payment.new] do |f| %>
-  <%= f.association :credit_card, label: 'Cartão de Crédito' %>
-  <%= f.association :buyer, label: 'Comprador' %>
+  <%= f.association :credit_card, collection: CreditCard.order('name ASC'), label: 'Cartão de Crédito' %>
+  <%= f.association :buyer, collection: Buyer.order('name ASC'),label: 'Comprador' %>
   <%= f.input :date, as: :date, html5: true, label: 'Data' %>
-  <%= f.association :category, label: 'Categoria' %>
+  <%= f.association :category, collection: Category.order('name ASC'),label: 'Categoria' %>
   <%= f.input :description, label: 'Descrição' %>
   <%= f.input :amount, label: 'Valor' %>
-  <!-- <= f.input :due_date, as: :date, html5: true, label: 'Due' %> -->
-  <!-- <= f.input :partial, label: 'Partial' %> -->
-  <%= f.input :total_partial, label: 'Parcelamento' %>
+  <%= f.input :total_partial, label: '# de Parcelas' %>
   <%= f.input :comment, label: 'Comentário' %>
-  <%= f.submit "File It", class: 'btn btn-primary btn-lg btn-block' %>
+  <%= f.submit "Salvar", class: 'btn btn-primary btn-lg btn-block' %>
 <% end %>
