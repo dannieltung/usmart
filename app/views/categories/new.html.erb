@@ -2,3 +2,6 @@
   <%= f.input :name, label: 'Nome' %>
   <%= f.submit "Salvar", class: 'btn btn-primary btn-lg btn-block' %>
 <% end %>
+<% @categories.each do |category| %>
+  <p><%= category.name %></p>
+<% end %>

@@ -1,5 +1,8 @@
 class BuyersController < ApplicationController
   def new
+    @buyers = Buyer.all.select do |buyer|
+      buyer.user == current_user
+    end
     @buyer = Buyer.new
   end
 
@@ -17,12 +20,6 @@ class BuyersController < ApplicationController
   end
 
   def update
-  end
-
-  def show
-  end
-
-  def index
   end
 
   def destroy

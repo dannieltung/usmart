@@ -5,7 +5,8 @@ class PaymentsController < ApplicationController
       @payment = Payment.new(payments_params)
       @payment.user = current_user
       @payment.partial = partial + 1
-      @payment.amount = params[:payment][:amount].to_i / params[:payment][:total_partial].to_i
+      @payment.total_amount = params[:payment][:amount]
+      @payment.amount = params[:payment][:amount].to_f / params[:payment][:total_partial].to_i
       @payment.description = params[:payment][:description].capitalize
       if case_card_1?
         @payment.due_date = (Date.parse(params[:payment][:date]) + (partial + 2).month).change(day: CreditCard.find(params[:payment][:credit_card_id]).due_day)
@@ -27,18 +28,29 @@ class PaymentsController < ApplicationController
   end
 
   def edit
+    @payment = Payment.find(params[:id])
+    unless @payment.user == current_user
+      redirect_to root_path, notice: 'Not allowed to Edit 😥'
+    end
+    @payments = Payment.where(date: @payment.date, category: @payment.category, description: @payment.description, total_partial: @payment.total_partial)
   end
 
   def update
   end
 
   def show
-  end
-
-  def index
+    @payment = Payment.find(params[:id])
+    @payments = Payment.where(date: @payment.date, category: @payment.category, description: @payment.description, total_partial: @payment.total_partial)
   end
 
   def destroy
+    @payment = Payment.find(params[:id])
+    unless @payment.user == current_user
+      redirect_to root_path, notice: 'Not allowed to Delete 😠'
+    end
+    @payments = Payment.where(date: @payment.date, category: @payment.category, description: @payment.description, total_partial: @payment.total_partial)
+    @payments.destroy_all
+    redirect_to root_path, notice: 'Payment destroyed!'
   end
 
   private
@@ -69,6 +81,7 @@ class PaymentsController < ApplicationController
                                     :user_id,
                                     :credit_card_id,
                                     :buyer_id,
-                                    :category_id)
+                                    :category_id,
+                                    :total_amount)
   end
 end

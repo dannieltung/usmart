@@ -4,3 +4,6 @@
   <%= f.input :best_day, label: 'Fechamento da Fatura' %>
   <%= f.submit "Salvar", class: 'btn btn-primary btn-lg btn-block' %>
 <% end %>
+<% @credit_cards.each do |credit_card| %>
+  <p><%= credit_card.name %></p>
+<% end %>

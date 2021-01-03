@@ -1,5 +1,8 @@
 class CategoriesController < ApplicationController
   def new
+    @categories = Category.all.select do |category|
+      category.user == current_user
+    end
     @category = Category.new
   end
 
@@ -18,12 +21,6 @@ class CategoriesController < ApplicationController
   end
 
   def update
-  end
-
-  def show
-  end
-
-  def index
   end
 
   def destroy

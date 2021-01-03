@@ -1,0 +1,29 @@
+<p><%= number_to_currency(@payment.total_amount) %></p>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Data</th>
+      <th scope="col">Categoria</th>
+      <th scope="col">Descrição</th>
+      <th scope="col">Valor</th>
+      <th scope="col">Vencimento</th>
+      <th scope="col">Parcela</th>
+      <th scope="col"># de Parcelas</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @payments.each do |payment| %>
+      <tr>
+        <td><%= payment.date.strftime('%d/%m') %></td>
+        <td><%= payment.category.name %></td>
+        <td><%= payment.description %></td>
+        <td><%= number_to_currency(payment.amount) %></td>
+        <td><%= payment.due_date.strftime('%d/%m/%y') %></td>
+        <td><%= payment.partial %></td>
+        <td><%= payment.total_partial %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<p><%= link_to 'Delete', payment_path(@payment), method: :delete, data: { confirm: "Are you sure?" } %></p>
+<p><%= link_to 'Edit', edit_payment_path(@payment) %></p>

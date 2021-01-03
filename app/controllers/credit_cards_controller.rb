@@ -1,5 +1,8 @@
 class CreditCardsController < ApplicationController
   def new
+    @credit_cards = CreditCard.all.select do |credit_card|
+      credit_card.user == current_user
+    end
     @credit_card = CreditCard.new
   end
 
@@ -18,12 +21,6 @@ class CreditCardsController < ApplicationController
   end
 
   def update
-  end
-
-  def show
-  end
-
-  def index
   end
 
   def destroy
