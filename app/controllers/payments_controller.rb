@@ -82,6 +82,7 @@ class PaymentsController < ApplicationController
                                     :credit_card_id,
                                     :buyer_id,
                                     :category_id,
-                                    :total_amount)
+                                    :total_amount,
+                                    :comment)
   end
 end

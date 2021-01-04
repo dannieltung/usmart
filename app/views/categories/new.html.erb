@@ -1,7 +1,11 @@
-<%= simple_form_for [Category.new] do |f| %>
-  <%= f.input :name, label: 'Nome' %>
-  <%= f.submit "Salvar", class: 'btn btn-primary btn-lg btn-block' %>
-<% end %>
-<% @categories.each do |category| %>
-  <p><%= category.name %></p>
-<% end %>
+<div class="container">
+  <%= simple_form_for [Category.new] do |f| %>
+    <%= f.input :name, label: 'Nome' %>
+    <%= f.submit "Salvar", class: 'btn btn-success btn-lg btn-block' %>
+  <% end %>
+  <ul>
+    <% @categories.each do |category| %>
+      <li><%= category.name %></li>
+    <% end %>
+  </ul>
+</div>

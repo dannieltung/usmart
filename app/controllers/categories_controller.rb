@@ -1,6 +1,6 @@
 class CategoriesController < ApplicationController
   def new
-    @categories = Category.all.select do |category|
+    @categories = Category.all.sort_by { |event| [event.name] }.select do |category|
       category.user == current_user
     end
     @category = Category.new

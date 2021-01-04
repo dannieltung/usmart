@@ -1,6 +1,6 @@
 class CreditCardsController < ApplicationController
   def new
-    @credit_cards = CreditCard.all.select do |credit_card|
+    @credit_cards = CreditCard.all.sort_by { |event| [event.name] }.select do |credit_card|
       credit_card.user == current_user
     end
     @credit_card = CreditCard.new

@@ -1,7 +1,11 @@
-<%= simple_form_for [Buyer.new] do |f| %>
-  <%= f.input :name, label: 'Nome' %>
-  <%= f.submit "Salvar", class: 'btn btn-primary btn-lg btn-block' %>
-<% end %>
-<% @buyers.each do |buyer| %>
-  <p><%= buyer.name %></p>
-<% end %>
+<div class="container">
+  <%= simple_form_for [Buyer.new] do |f| %>
+    <%= f.input :name, label: 'Nome' %>
+    <%= f.submit "Salvar", class: 'btn btn-success btn-lg btn-block' %>
+  <% end %>
+  <ul>
+    <% @buyers.each do |buyer| %>
+      <li><%= buyer.name %></li>
+    <% end %>
+  </ul>
+</div>

@@ -1,6 +1,6 @@
 class BuyersController < ApplicationController
   def new
-    @buyers = Buyer.all.select do |buyer|
+    @buyers = Buyer.all.sort_by { |event| [event.name] }.select do |buyer|
       buyer.user == current_user
     end
     @buyer = Buyer.new

@@ -1,9 +1,13 @@
-<%= simple_form_for [CreditCard.new] do |f| %>
-  <%= f.input :name, label: 'Nome' %>
-  <%= f.input :due_day, label: 'Vencimento' %>
-  <%= f.input :best_day, label: 'Fechamento da Fatura' %>
-  <%= f.submit "Salvar", class: 'btn btn-primary btn-lg btn-block' %>
-<% end %>
-<% @credit_cards.each do |credit_card| %>
-  <p><%= credit_card.name %></p>
-<% end %>
+<div class="container">
+  <%= simple_form_for [CreditCard.new] do |f| %>
+    <%= f.input :name, label: 'Nome' %>
+    <%= f.input :due_day, label: 'Vencimento' %>
+    <%= f.input :best_day, label: 'Fechamento da Fatura' %>
+    <%= f.submit "Salvar", class: 'btn btn-success btn-lg btn-block' %>
+  <% end %>
+  <ul>
+    <% @credit_cards.each do |credit_card| %>
+      <li><%= credit_card.name %></li>
+    <% end %>
+  </ul>
+</div>

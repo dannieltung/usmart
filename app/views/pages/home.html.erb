@@ -9,14 +9,13 @@
       <%= f.input :amount, label: 'Valor' %>
       <%= f.input :total_partial, label: '# de Parcelas' %>
       <%= f.input :comment, label: 'Comentário' %>
-      <%= f.submit "Salvar", class: 'btn btn-primary btn-lg btn-block' %>
+      <%= f.submit "Salvar", class: 'btn btn-dark btn-lg btn-block' %>
     <% end %>
   </div>
   <br>
   <table class="table table-striped">
     <thead>
       <tr>
-        <th scope="col"></th>
         <th scope="col">Cartão</th>
         <th scope="col">Comprador</th>
         <th scope="col">Data</th>
@@ -26,12 +25,12 @@
         <th scope="col">Vencimento</th>
         <th scope="col">Parcela</th>
         <th scope="col">Parcelas</th>
+        <th scope="col"></th>
       </tr>
     </thead>
     <tbody>
       <% @payments.each do |payment| %>
         <tr>
-          <td><%= link_to '💰', payment_path(payment) %></td>
           <td><%= payment.credit_card.name %></td>
           <td><%= payment.buyer.name %></td>
           <td><%= payment.date.strftime('%d/%m') %></td>
@@ -41,6 +40,7 @@
           <td><%= payment.due_date.strftime('%d/%m/%y') %></td>
           <td><%= payment.partial %></td>
           <td><%= payment.total_partial %></td>
+          <td id="emoji"><%= link_to '💳', payment_path(payment) %></td>
         </tr>
       <% end %>
     </tbody>
