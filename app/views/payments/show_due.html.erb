@@ -1,0 +1,33 @@
+<br>
+<p class="show-center">
+  <h1>Total: <%= number_to_currency(@total_amount) %></h1>
+</p>
+<br>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Data</th>
+      <th scope="col">Categoria</th>
+      <th scope="col">Descrição</th>
+      <th scope="col">Valor</th>
+      <th scope="col">Vencimento</th>
+      <th scope="col">Parcela</th>
+      <th scope="col"># de Parcelas</th>
+      <th scope="col">Comentário</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @payments.each do |payment| %>
+      <tr>
+        <td><%= payment.date.strftime('%d/%m') %></td>
+        <td><%= payment.category.name %></td>
+        <td><%= payment.description %></td>
+        <td><%= number_to_currency(payment.amount) %></td>
+        <td><%= payment.due_date.strftime('%d/%m/%y') %></td>
+        <td><%= payment.partial %></td>
+        <td><%= payment.total_partial %></td>
+        <td><%= payment.comment %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

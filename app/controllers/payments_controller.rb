@@ -43,6 +43,15 @@ class PaymentsController < ApplicationController
     @payments = Payment.where(date: @payment.date, category: @payment.category, description: @payment.description, total_partial: @payment.total_partial)
   end
 
+  def show_due
+    @payment = Payment.find(params[:id])
+    @payments = Payment.where(due_date: @payment.due_date, credit_card_id: @payment.credit_card_id)
+    @total_amount = 0
+    @payments.each do |payment|
+      @total_amount += payment.amount
+    end
+  end
+
   def destroy
     @payment = Payment.find(params[:id])
     unless @payment.user == current_user
