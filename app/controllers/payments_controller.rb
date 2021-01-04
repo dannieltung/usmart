@@ -45,7 +45,7 @@ class PaymentsController < ApplicationController
 
   def show_due
     @payment = Payment.find(params[:id])
-    @payments = Payment.where(due_date: @payment.due_date, credit_card_id: @payment.credit_card_id)
+    @payments = Payment.where(due_date: @payment.due_date, credit_card_id: @payment.credit_card_id).sort_by { |event| [event.date] }
     @total_amount = 0
     @payments.each do |payment|
       @total_amount += payment.amount
