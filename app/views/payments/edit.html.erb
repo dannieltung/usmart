@@ -30,3 +30,16 @@
     <% end %>
   </tbody>
 </table>
+<% @payments.each do |payment| %>
+  <%= simple_form_for [@user, @payment] do |f| %>
+    <td><%= f.association :credit_card, label: false %></td>
+    <td><%= f.association :buyer, label: false %></td>
+    <td><%= f.input :date, as: :date, html5: true, label: false %></td>
+    <td><%= f.association :category, label: false %></td>
+    <td><%= f.input :description, label: false %></td>
+    <td><%= f.input :amount, label: false %></td>
+    <td><%= f.input :total_partial, label: false %></td>
+    <td><%= f.input :comment, label: false %></td>
+    <td><%= f.submit "Salvar", class: 'btn btn-primary btn-lg btn-block' %></td>
+  <% end %>
+<% end %>

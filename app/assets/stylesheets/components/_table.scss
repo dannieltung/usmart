@@ -10,8 +10,16 @@
 
 #emoji a {
    font-size: 30px;
+   color: black;
      &:hover {
      text-decoration: none;
    }
 }
 
+#table-link a {
+   color: black;
+     &:hover {
+     text-decoration: none;
+     background-color: orange;
+   }
+}
