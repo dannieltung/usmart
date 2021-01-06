@@ -34,10 +34,10 @@
           <td><%= payment.credit_card.name %></td>
           <td><%= payment.buyer.name %></td>
           <td><%= payment.date.strftime('%d/%m') %></td>
-          <td><%= payment.category.name %></td>
+          <td id="table-link"><%= link_to payment.category.name,payment_category_path(payment) %></td>
           <td><%= payment.description %></td>
           <td><%= number_to_currency(payment.amount) %></td>
-          <td id="table-link"><%= link_to payment.due_date.strftime('%d/%m/%y'),payment_due_path(payment) %></td>
+          <td id="table-link"><%= link_to payment.due_date.strftime('%d/%m'),payment_due_path(payment) %></td>
           <td><%= payment.partial %></td>
           <td><%= payment.total_partial %></td>
           <td id="emoji"><%= link_to '💳', payment_path(payment) %></td>
