@@ -18,6 +18,12 @@ class CreditCardsController < ApplicationController
   end
 
   def edit
+    @payment = Payment.find(params[:id])
+    @credit_card = CreditCard.find(@payment.credit_card_id)
+    unless @credit_card.user == current_user
+      redirect_to root_path, notice: 'Not allowed to Edit 😥'
+    end
+    statement
   end
 
   def update
@@ -27,6 +33,10 @@ class CreditCardsController < ApplicationController
   end
 
   private
+
+  def statement
+    @payments_january = Payment.where(credit_card_id: @payment.credit_card_id, partial: 1)
+  end
 
   def credit_cards_params
     params.require(:credit_card).permit(:name, :due_day, :best_day)

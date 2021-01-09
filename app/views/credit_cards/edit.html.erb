@@ -1,0 +1,17 @@
+<%= simple_form_for [@user, @credit_card] do |f| %>
+  <%= f.input :name, label: 'Name' %>
+  <%= f.input :due_day, label: 'Vencimento' %>
+  <%= f.input :best_day, label: 'Fechamento da Fatura' %>
+  <%= f.submit 'Update', class: 'btn btn-success btn-sm' %>
+<% end %>
+<h4>Janeiro</h4>
+<table>
+  <tbody>
+    <% @payments_january.each do |payment| %>
+      <tr>
+        <td><%= payment.description %></td>
+        <td><%= payment.amount %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

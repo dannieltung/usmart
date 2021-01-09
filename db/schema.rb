@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_05_232926) do
+ActiveRecord::Schema.define(version: 2021_01_09_205148) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,6 +58,8 @@ ActiveRecord::Schema.define(version: 2021_01_05_232926) do
     t.bigint "buyer_id"
     t.float "total_amount"
     t.integer "month_due"
+    t.integer "month_date"
+    t.integer "year_date"
     t.index ["buyer_id"], name: "index_payments_on_buyer_id"
     t.index ["category_id"], name: "index_payments_on_category_id"
     t.index ["credit_card_id"], name: "index_payments_on_credit_card_id"

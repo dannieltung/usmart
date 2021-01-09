@@ -18,6 +18,8 @@ class PaymentsController < ApplicationController
         @payment.due_date = (Date.parse(params[:payment][:date]) + partial.month).change(day: CreditCard.find(params[:payment][:credit_card_id]).due_day)
       end
       @payment.month_due = @payment.due_date.month
+      @payment.month_date = @payment.date.month
+      @payment.year_date = @payment.date.year
       @payment.save
       partial += 1
     end

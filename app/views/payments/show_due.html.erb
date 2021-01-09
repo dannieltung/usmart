@@ -1,6 +1,9 @@
 <br>
 <p class="show-center">
   <h1>Total: <%= number_to_currency(@total_amount) %></h1>
+  <p>
+    Vencimento: <%= @payment.due_date.strftime('%d/%m/%y') %>
+  </p>
 </p>
 <br>
 <table class="table table-striped">
