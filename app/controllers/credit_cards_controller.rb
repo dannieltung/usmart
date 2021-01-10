@@ -38,51 +38,51 @@ class CreditCardsController < ApplicationController
     @payments_january = Payment.where(credit_card_id: @payment.credit_card_id,
                                       year_date: Date.today.year,
                                       month_date: 1,
-                                      partial: 1)
+                                      partial: 1).sort_by { |event| [event.date] }
     @payments_february = Payment.where(credit_card_id: @payment.credit_card_id,
                                        year_date: Date.today.year,
                                        month_date: 2,
-                                       partial: 1)
+                                       partial: 1).sort_by { |event| [event.date] }
     @payments_march = Payment.where(credit_card_id: @payment.credit_card_id,
                                     year_date: Date.today.year,
                                     month_date: 3,
-                                    partial: 1)
+                                    partial: 1).sort_by { |event| [event.date] }
     @payments_april = Payment.where(credit_card_id: @payment.credit_card_id,
                                     year_date: Date.today.year,
                                     month_date: 4,
-                                    partial: 1)
+                                    partial: 1).sort_by { |event| [event.date] }
     @payments_may = Payment.where(credit_card_id: @payment.credit_card_id,
                                   year_date: Date.today.year,
                                   month_date: 5,
-                                  partial: 1)
+                                  partial: 1).sort_by { |event| [event.date] }
     @payments_june = Payment.where(credit_card_id: @payment.credit_card_id,
                                    year_date: Date.today.year,
                                    month_date: 6,
-                                   partial: 1)
+                                   partial: 1).sort_by { |event| [event.date] }
     @payments_july = Payment.where(credit_card_id: @payment.credit_card_id,
                                    year_date: Date.today.year,
                                    month_date: 7,
-                                   partial: 1)
+                                   partial: 1).sort_by { |event| [event.date] }
     @payments_august = Payment.where(credit_card_id: @payment.credit_card_id,
                                      year_date: Date.today.year,
                                      month_date: 8,
-                                     partial: 1)
+                                     partial: 1).sort_by { |event| [event.date] }
     @payments_september = Payment.where(credit_card_id: @payment.credit_card_id,
                                         year_date: Date.today.year,
                                         month_date: 9,
-                                        partial: 1)
+                                        partial: 1).sort_by { |event| [event.date] }
     @payments_october = Payment.where(credit_card_id: @payment.credit_card_id,
                                       year_date: Date.today.year,
                                       month_date: 10,
-                                      partial: 1)
+                                      partial: 1).sort_by { |event| [event.date] }
     @payments_november = Payment.where(credit_card_id: @payment.credit_card_id,
                                        year_date: Date.today.year,
                                        month_date: 11,
-                                       partial: 1)
+                                       partial: 1).sort_by { |event| [event.date] }
     @payments_december = Payment.where(credit_card_id: @payment.credit_card_id,
                                        year_date: "2020",
                                        month_date: 12,
-                                       partial: 1)
+                                       partial: 1).sort_by { |event| [event.date] }
   end
 
   def credit_cards_params

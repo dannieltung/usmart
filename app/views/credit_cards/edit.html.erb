@@ -5,28 +5,32 @@
   <%= f.submit 'Update', class: 'btn btn-success btn-sm' %>
 <% end %>
 <br>
-<h4>Dezembro de <%= @payments_december.last.year_date %> - <%= number_to_currency(@payments_december.sum {|h| h[:amount] }) %></h4>
-<table>
-  <tbody>
-    <% @payments_december.each do |payment| %>
-      <tr>
-        <td><%= payment.date.strftime('%d/%m') %></td>
-        <td><%= payment.description %></td>
-        <td><%= number_to_currency(payment.amount) %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<% unless @payments_december.empty? %>
+  <h4>Dezembro de <%= @payments_december.last.year_date %> - <%= number_to_currency(@payments_december.sum {|h| h[:amount] }) %></h4>
+  <table>
+    <tbody>
+      <% @payments_december.each do |payment| %>
+        <tr>
+          <td><%= payment.date.strftime('%d/%m') %></td>
+          <td><%= payment.description %></td>
+          <td><%= number_to_currency(payment.amount) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
 <hr>
-<h4>Janeiro de <%= @payments_january.last.year_date %> - <%= number_to_currency(@payments_january.sum {|h| h[:amount] }) %></h4>
-<table>
-  <tbody>
-    <% @payments_january.each do |payment| %>
-      <tr>
-        <td><%= payment.date.strftime('%d/%m') %></td>
-        <td><%= payment.description %></td>
-        <td><%= number_to_currency(payment.amount) %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<% unless @payments_january.empty? %>
+  <h4>Janeiro de <%= @payments_january.last.year_date %> - <%= number_to_currency(@payments_january.sum {|h| h[:amount] }) %></h4>
+  <table>
+    <tbody>
+      <% @payments_january.each do |payment| %>
+        <tr>
+          <td><%= payment.date.strftime('%d/%m') %></td>
+          <td><%= payment.description %></td>
+          <td><%= number_to_currency(payment.amount) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
