@@ -18,6 +18,16 @@ class CategoriesController < ApplicationController
   end
 
   def edit
+    @payment = Payment.find(params[:id])
+    @payments = Payment.where(month_due: @payment.due_date.month, category: @payment.category).sort_by { |event| [event.date] }
+    @total_amount = 0
+    @payments.each do |payment|
+      @total_amount += payment.amount
+    end
+    @category = Category.find(@payment.category_id)
+    unless @category.user == current_user
+      redirect_to root_path, notice: 'Not allowed to Edit 😥'
+    end
   end
 
   def update
