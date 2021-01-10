@@ -27,6 +27,19 @@ class CreditCardsController < ApplicationController
   end
 
   def update
+    @credit_card = CreditCard.find(params[:id])
+    unless @credit_card.user == current_user
+      redirect_to root_path, notice: 'Not allowed to Edit 😥'
+    end
+    if @credit_card.update(credit_cards_params)
+      redirect_to credit_card_path(@credit_card), notice: 'Credit Card Updated!'
+    else
+      render :edit
+    end
+  end
+
+  def show
+    @credit_card = CreditCard.find(params[:id])
   end
 
   def destroy

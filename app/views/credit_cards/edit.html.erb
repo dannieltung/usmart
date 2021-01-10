@@ -1,9 +1,17 @@
-<%= simple_form_for [@user, @credit_card] do |f| %>
-  <%= f.input :name, label: 'Name' %>
-  <%= f.input :due_day, label: 'Vencimento' %>
-  <%= f.input :best_day, label: 'Fechamento da Fatura' %>
-  <%= f.submit 'Update', class: 'btn btn-success btn-sm' %>
-<% end %>
+<br>
+<div class="container">
+  <%= simple_form_for [@user, @credit_card],
+    wrapper: :inline_form,
+    html: { class: "form-inline" },
+    wrapper_mappings: {
+      boolean: :inline_boolean
+    } do |f| %>
+    <%= f.input :name, hint: "Nome", input_html: { class: "mb-2 mr-sm-2" } %>
+    <%= f.input :due_day, hint: "Vencimento",input_html: { class: "mb-2 mr-sm-2" } %>
+    <%= f.input :best_day, hint: "Fechamento da Fatura",input_html: { class: "mb-2 mr-sm-2" } %>
+    <%= f.submit 'Update', class: 'btn btn-success btn-lg mb-2' %>
+  <% end %>
+</div>
 <br>
 <% unless @payments_december.empty? %>
   <h4>Dezembro de <%= @payments_december.last.year_date %> - <%= number_to_currency(@payments_december.sum {|h| h[:amount] }) %></h4>
