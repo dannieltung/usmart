@@ -40,6 +40,11 @@ class CreditCardsController < ApplicationController
 
   def show
     @credit_card = CreditCard.find(params[:id])
+    @payment = Payment.where(credit_card_id: @credit_card).last
+    unless @credit_card.user == current_user
+      redirect_to root_path, notice: 'Not allowed to Edit 😥'
+    end
+    statement
   end
 
   def destroy
