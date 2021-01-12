@@ -8,15 +8,7 @@ class PaymentsController < ApplicationController
       @payment.total_amount = params[:payment][:amount]
       @payment.amount = params[:payment][:amount].to_f / params[:payment][:total_partial].to_i
       @payment.description = params[:payment][:description].titleize
-      if case_card_1?
-        @payment.due_date = (Date.parse(params[:payment][:date]) + (partial + 2).month).change(day: CreditCard.find(params[:payment][:credit_card_id]).due_day)
-      elsif case_card_2?
-        @payment.due_date = (Date.parse(params[:payment][:date]) + (partial + 1).month).change(day: CreditCard.find(params[:payment][:credit_card_id]).due_day)
-      elsif case_card_3?
-        @payment.due_date = (Date.parse(params[:payment][:date]) + (partial + 1).month).change(day: CreditCard.find(params[:payment][:credit_card_id]).due_day)
-      elsif case_card_4?
-        @payment.due_date = (Date.parse(params[:payment][:date]) + partial.month).change(day: CreditCard.find(params[:payment][:credit_card_id]).due_day)
-      end
+      due_date(partial)
       @payment.month_due = @payment.due_date.month
       @payment.month_date = @payment.date.month
       @payment.year_date = @payment.date.year
@@ -43,12 +35,12 @@ class PaymentsController < ApplicationController
 
   def show
     @payment = Payment.find(params[:id])
-    @payments = Payment.where(date: @payment.date, category: @payment.category, description: @payment.description, total_partial: @payment.total_partial).sort_by { |event| [event.due_date] }
+    @payments = Payment.where(date: @payment.date, description: @payment.description, total_partial: @payment.total_partial).sort_by { |event| [event.due_date] }
   end
 
   def show_due
     @payment = Payment.find(params[:id])
-    @payments = Payment.where(due_date: @payment.due_date, credit_card_id: @payment.credit_card_id).sort_by { |event| [event.date] }
+    @payments = Payment.where(due_date: @payment.due_date, credit_card_id: @payment.credit_card_id).sort_by { |event| [event.date, event.amount] }
     @total_amount = 0
     @payments.each do |payment|
       @total_amount += payment.amount
@@ -57,10 +49,10 @@ class PaymentsController < ApplicationController
 
   def show_date
     @payment = Payment.find(params[:id])
-    @payments = Payment.where(date: @payment.date).sort_by { |event| [event.category.name] }
+    @payments = Payment.where(date: @payment.date, partial: 1).sort_by { |event| [event.category.name] }
     @total_amount = 0
     @payments.each do |payment|
-      @total_amount += payment.amount
+      @total_amount += payment.total_amount
     end
   end
 
@@ -85,20 +77,40 @@ class PaymentsController < ApplicationController
 
   private
 
-  def case_card_1?
-    CreditCard.find(params[:payment][:credit_card_id]).best_day > CreditCard.find(params[:payment][:credit_card_id]).due_day && Date.parse(params[:payment][:date]) >= Date.parse("#{CreditCard.find(params[:payment][:credit_card_id]).best_day}/#{Date.parse(params[:payment][:date]).month}/#{Date.parse(params[:payment][:date]).year}")
-  end
-
-  def case_card_2?
-    CreditCard.find(params[:payment][:credit_card_id]).best_day > CreditCard.find(params[:payment][:credit_card_id]).due_day && Date.parse(params[:payment][:date]) < Date.parse("#{CreditCard.find(params[:payment][:credit_card_id]).best_day}/#{Date.parse(params[:payment][:date]).month}/#{Date.parse(params[:payment][:date]).year}")
-  end
-
-  def case_card_3?
-    CreditCard.find(params[:payment][:credit_card_id]).best_day < CreditCard.find(params[:payment][:credit_card_id]).due_day && Date.parse(params[:payment][:date]) >= Date.parse("#{CreditCard.find(params[:payment][:credit_card_id]).best_day}/#{Date.parse(params[:payment][:date]).month}/#{Date.parse(params[:payment][:date]).year}")
-  end
-
-  def case_card_4?
-    CreditCard.find(params[:payment][:credit_card_id]).best_day < CreditCard.find(params[:payment][:credit_card_id]).due_day && Date.parse(params[:payment][:date]) < Date.parse("#{CreditCard.find(params[:payment][:credit_card_id]).best_day}/#{Date.parse(params[:payment][:date]).month}/#{Date.parse(params[:payment][:date]).year}")
+  def due_date(partial)
+    if CreditCard.find(params[:payment][:credit_card_id]).best_day > CreditCard.find(params[:payment][:credit_card_id]).due_day && Date.parse(params[:payment][:date]) >= Date.parse("#{CreditCard.find(params[:payment][:credit_card_id]).best_day}/#{Date.parse(params[:payment][:date]).month}/#{Date.parse(params[:payment][:date]).year}")
+      @payment.due_date = (Date.parse(params[:payment][:date]) + (partial + 2).month).change(day: CreditCard.find(params[:payment][:credit_card_id]).due_day)
+      case @payment.due_date.wday
+      when 0
+        @payment.due_date = @payment.due_date + 1.day
+      when 6
+        @payment.due_date = @payment.due_date + 2.day
+      end
+    elsif CreditCard.find(params[:payment][:credit_card_id]).best_day > CreditCard.find(params[:payment][:credit_card_id]).due_day && Date.parse(params[:payment][:date]) < Date.parse("#{CreditCard.find(params[:payment][:credit_card_id]).best_day}/#{Date.parse(params[:payment][:date]).month}/#{Date.parse(params[:payment][:date]).year}")
+      @payment.due_date = (Date.parse(params[:payment][:date]) + (partial + 1).month).change(day: CreditCard.find(params[:payment][:credit_card_id]).due_day)
+      case @payment.due_date.wday
+      when 0
+        @payment.due_date = @payment.due_date + 1.day
+      when 6
+        @payment.due_date = @payment.due_date + 2.day
+      end
+    elsif CreditCard.find(params[:payment][:credit_card_id]).best_day < CreditCard.find(params[:payment][:credit_card_id]).due_day && Date.parse(params[:payment][:date]) >= Date.parse("#{CreditCard.find(params[:payment][:credit_card_id]).best_day}/#{Date.parse(params[:payment][:date]).month}/#{Date.parse(params[:payment][:date]).year}")
+      @payment.due_date = (Date.parse(params[:payment][:date]) + (partial + 1).month).change(day: CreditCard.find(params[:payment][:credit_card_id]).due_day)
+      case @payment.due_date.wday
+      when 0
+        @payment.due_date = @payment.due_date + 1.day
+      when 6
+        @payment.due_date = @payment.due_date + 2.day
+      end
+    elsif CreditCard.find(params[:payment][:credit_card_id]).best_day < CreditCard.find(params[:payment][:credit_card_id]).due_day && Date.parse(params[:payment][:date]) < Date.parse("#{CreditCard.find(params[:payment][:credit_card_id]).best_day}/#{Date.parse(params[:payment][:date]).month}/#{Date.parse(params[:payment][:date]).year}")
+      @payment.due_date = (Date.parse(params[:payment][:date]) + partial.month).change(day: CreditCard.find(params[:payment][:credit_card_id]).due_day)
+      case @payment.due_date.wday
+      when 0
+        @payment.due_date = @payment.due_date + 1.day
+      when 6
+        @payment.due_date = @payment.due_date + 2.day
+      end
+    end
   end
 
   def payments_params

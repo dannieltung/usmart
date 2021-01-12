@@ -1,3 +1,4 @@
+<p>Toda informação a respeito desta operação</p>
 <br>
 <p class="show-center">
   <h1>Total: <%= number_to_currency(@payment.total_amount) %></h1>
@@ -11,6 +12,7 @@
   <table class="table table-striped">
     <thead>
       <tr>
+        <th scope="col">Cartão</th>
         <th scope="col">Data</th>
         <th scope="col">Categoria</th>
         <th scope="col">Descrição</th>
@@ -24,6 +26,7 @@
     <tbody>
       <% @payments.each do |payment| %>
         <tr>
+          <td><%= payment.credit_card.name %></td>
           <td><%= payment.date.strftime('%d/%m') %></td>
           <td><%= payment.category.name %></td>
           <td><%= payment.description %></td>

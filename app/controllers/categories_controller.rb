@@ -19,7 +19,7 @@ class CategoriesController < ApplicationController
 
   def edit
     @payment = Payment.find(params[:id])
-    @payments = Payment.where(month_due: @payment.due_date.month, category: @payment.category).sort_by { |event| [event.date] }
+    @payments = Payment.where(month_due: @payment.date.month, category: @payment.category).sort_by { |event| [event.date] }
     @total_amount = 0
     @payments.each do |payment|
       @total_amount += payment.amount

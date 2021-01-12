@@ -1,10 +1,19 @@
+<p>Total da categoria PAGOS naquele mês de fatura</p>
 <br>
-<p class="show-center">
-  <h1>Total: <%= number_to_currency(@total_amount) %></h1>
+<div class="show-center">
+  <h1>Total: <%= "#{number_to_currency(@total_amount)} em #{@payment.month_date}" %></h1>
   <p>
-    <%= @payment.category.name %>
+    <%= simple_form_for [@user, @category],
+      wrapper: :inline_form,
+      html: { class: "form-inline" },
+      wrapper_mappings: {
+        boolean: :inline_boolean
+      } do |f| %>
+      <%= f.input :name, hint: "Nome", input_html: { class: "mb-2 mr-sm-2" } %>
+      <%= f.submit 'Update', class: 'btn btn-success btn-lg mb-2' %>
+    <% end %>
   </p>
-</p>
+</div>
 <br>
 <table class="table table-striped">
   <thead>
