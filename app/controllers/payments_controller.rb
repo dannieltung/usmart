@@ -38,15 +38,6 @@ class PaymentsController < ApplicationController
     @payments = Payment.where(date: @payment.date, description: @payment.description, total_partial: @payment.total_partial).sort_by { |event| [event.due_date] }
   end
 
-  def show_due
-    @payment = Payment.find(params[:id])
-    @payments = Payment.where(due_date: @payment.due_date, credit_card_id: @payment.credit_card_id).sort_by { |event| [event.date, event.amount] }
-    @total_amount = 0
-    @payments.each do |payment|
-      @total_amount += payment.amount
-    end
-  end
-
   def show_date
     @payment = Payment.find(params[:id])
     @payments = Payment.where(date: @payment.date, partial: 1).sort_by { |event| [event.category.name] }
@@ -55,6 +46,18 @@ class PaymentsController < ApplicationController
       @total_amount += payment.total_amount
     end
   end
+
+  def show_due
+    @payment = Payment.find(params[:id])
+    @payments = Payment.where(due_date: @payment.due_date, credit_card_id: @payment.credit_card_id).sort do |a, b|
+      [b[:date], a[:amount]] <=> [a[:date], b[:amount]]
+    end
+    @total_amount = 0
+    @payments.each do |payment|
+      @total_amount += payment.amount
+    end
+  end
+
 
   # def show_category
   #   @payment = Payment.find(params[:id])
