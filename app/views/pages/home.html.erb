@@ -16,8 +16,8 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th scope="col">Cartão</th>
         <th scope="col">Vencimento</th>
+        <th scope="col">Cartão</th>
         <th scope="col">Comprador</th>
         <th scope="col">Data</th>
         <th scope="col">Categoria</th>
@@ -30,8 +30,8 @@
     <tbody>
       <% @payments.each do |payment| %>
         <tr>
+          <td id="table-link"><%= link_to payment.due_date.strftime('%d/%m'),payment_due_path(payment) %></td>
           <td id="table-link"><%= link_to payment.credit_card.name, edit_credit_card_path(payment) %></td>
-          <td id="table-link"><%= link_to payment.due_date.strftime('%a, %d/%m'),payment_due_path(payment) %></td>
           <td><%= payment.buyer.name %></td>
           <td id="table-link"><%= link_to payment.date.strftime('%d/%m'),payment_date_path(payment) %></td>
           <td><%= payment.category.name %></td>

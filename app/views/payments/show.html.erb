@@ -3,8 +3,7 @@
 <p class="show-center">
   <h1>Total: <%= number_to_currency(@payment.total_amount) %></h1>
   <p>
-    <%= link_to 'Delete', payment_path(@payment), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-sm" %>
-    <%= link_to 'Edit', edit_payment_path(@payment), class: "btn btn-secondary btn-sm" %>
+    <%= link_to 'Delete', payment_path(@payment), method: :delete, data: { confirm: "Tem certeza?" }, class: "btn btn-danger btn-sm" %>
   </p>
 </p>
 <br>

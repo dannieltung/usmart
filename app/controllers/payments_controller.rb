@@ -1,5 +1,6 @@
 class PaymentsController < ApplicationController
   def create
+    flag = rand(1..100)
     partial = 0
     params[:payment][:total_partial].to_i.times do
       @payment = Payment.new(payments_params)
@@ -12,6 +13,7 @@ class PaymentsController < ApplicationController
       @payment.month_due = @payment.due_date.month
       @payment.month_date = @payment.date.month
       @payment.year_date = @payment.date.year
+      @payment.flag = flag
       @payment.save
       partial += 1
     end
@@ -35,7 +37,7 @@ class PaymentsController < ApplicationController
 
   def show
     @payment = Payment.find(params[:id])
-    @payments = Payment.where(date: @payment.date, description: @payment.description, total_partial: @payment.total_partial).sort_by { |event| [event.due_date] }
+    @payments = Payment.where(flag: @payment.flag, date: @payment.date, description: @payment.description, total_partial: @payment.total_partial).sort_by { |event| [event.due_date] }
   end
 
   def show_date

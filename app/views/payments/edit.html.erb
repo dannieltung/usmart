@@ -1,45 +1,9 @@
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="col">Cartão</th>
-      <th scope="col">Comprador</th>
-      <th scope="col">Data</th>
-      <th scope="col">Categoria</th>
-      <th scope="col">Descrição</th>
-      <th scope="col">Valor</th>
-      <th scope="col">Vencimento</th>
-      <th scope="col">Parcela</th>
-      <th scope="col">Parcelas</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @payments.each do |payment| %>
-      <tr>
-        <%= simple_form_for [@user, @payment] do |f| %>
-          <td><%= f.association :credit_card, label: false %></td>
-          <td><%= f.association :buyer, label: false %></td>
-          <td><%= f.input :date, as: :date, html5: true, label: false %></td>
-          <td><%= f.association :category, label: false %></td>
-          <td><%= f.input :description, label: false %></td>
-          <td><%= f.input :amount, label: false %></td>
-          <td><%= f.input :total_partial, label: false %></td>
-          <td><%= f.input :comment, label: false %></td>
-          <td><%= f.submit "Salvar", class: 'btn btn-primary btn-lg btn-block' %></td>
-        <% end %>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-<% @payments.each do |payment| %>
+<p>Edição de um ÚNICO payment individual</p>
+<div class="container">
   <%= simple_form_for [@user, @payment] do |f| %>
-    <td><%= f.association :credit_card, label: false %></td>
-    <td><%= f.association :buyer, label: false %></td>
-    <td><%= f.input :date, as: :date, html5: true, label: false %></td>
-    <td><%= f.association :category, label: false %></td>
-    <td><%= f.input :description, label: false %></td>
-    <td><%= f.input :amount, label: false %></td>
-    <td><%= f.input :total_partial, label: false %></td>
-    <td><%= f.input :comment, label: false %></td>
-    <td><%= f.submit "Salvar", class: 'btn btn-primary btn-lg btn-block' %></td>
+    <%= f.input :date, as: :fake, label: false %>
+    <%= f.input :description, label: "Descrição" %>
+    <%= f.input :amount, label: "Valor" %>
+    <%= f.submit 'Update', class: 'btn btn-success btn-lg mb-2' %>
   <% end %>
-<% end %>
+</div>
