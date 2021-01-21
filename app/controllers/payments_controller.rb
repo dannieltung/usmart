@@ -32,12 +32,22 @@ class PaymentsController < ApplicationController
     @payments = Payment.where(date: @payment.date, category: @payment.category, description: @payment.description, total_partial: @payment.total_partial)
   end
 
-  def update
-  end
-
   def show
     @payment = Payment.find(params[:id])
     @payments = Payment.where(flag: @payment.flag, date: @payment.date, description: @payment.description, total_partial: @payment.total_partial).sort_by { |event| [event.due_date] }
+  end
+
+  def update
+    @single_partial = Payment.find(params[:id])
+    @payment = Payment.where(flag: @single_partial.flag, date: @single_partial.date, total_partial: @single_partial.total_partial, total_amount: @single_partial.total_amount)
+    unless @single_partial.user == current_user
+      redirect_to root_path, notice: 'Not allowed to Edit 😥'
+    end
+    if @payment.update(payment_edit_params)
+      redirect_to payment_path(@single_partial), notice: 'Pagamento Atualizado!'
+    else
+      render :show
+    end
   end
 
   def show_date
@@ -130,6 +140,13 @@ class PaymentsController < ApplicationController
                                     :buyer_id,
                                     :category_id,
                                     :total_amount,
+                                    :comment)
+  end
+
+  def payment_edit_params
+    params.require(:payment).permit(:description,
+                                    :user_id,
+                                    :category_id,
                                     :comment)
   end
 end

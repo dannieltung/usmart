@@ -39,3 +39,11 @@
     </tbody>
   </table>
 </div>
+<div class="container">
+  <%= simple_form_for [@user, @payment] do |f| %>
+    <%= f.association :category, collection: Category.order('name ASC'),label: 'Categoria' %>
+    <%= f.input :description, label: "Descrição" %>
+    <%= f.input :comment, label: "Comentário" %>
+    <%= f.submit 'Update', class: 'btn btn-success btn-lg mb-2' %>
+  <% end %>
+</div>
