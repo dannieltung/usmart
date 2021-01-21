@@ -29,12 +29,12 @@ class PaymentsController < ApplicationController
     unless @payment.user == current_user
       redirect_to root_path, notice: 'Not allowed to Edit 😥'
     end
-    @payments = Payment.where(date: @payment.date, category: @payment.category, description: @payment.description, total_partial: @payment.total_partial)
+    @payments = Payment.where(flag: @payment.flag, date: @payment.date, total_amount: @payment.total_amount, total_partial: @payment.total_partial)
   end
 
   def show
     @payment = Payment.find(params[:id])
-    @payments = Payment.where(flag: @payment.flag, date: @payment.date, description: @payment.description, total_partial: @payment.total_partial).sort_by { |event| [event.due_date] }
+    @payments = Payment.where(flag: @payment.flag, date: @payment.date, total_amount: @payment.total_amount, total_partial: @payment.total_partial).sort_by { |event| [event.due_date] }
   end
 
   def update
@@ -70,6 +70,15 @@ class PaymentsController < ApplicationController
     end
   end
 
+  def destroy
+    @payment = Payment.find(params[:id])
+    unless @payment.user == current_user
+      redirect_to root_path, notice: 'Not allowed to Delete 😠'
+    end
+    @payments = Payment.where(flag: @payment.flag, date: @payment.date, total_partial: @payment.total_partial, total_amount: @payment.total_amount)
+    @payments.destroy_all
+    redirect_to root_path, notice: 'Payment destroyed!'
+  end
 
   # def show_category
   #   @payment = Payment.find(params[:id])
@@ -79,16 +88,6 @@ class PaymentsController < ApplicationController
   #     @total_amount += payment.amount
   #   end
   # end
-
-  def destroy
-    @payment = Payment.find(params[:id])
-    unless @payment.user == current_user
-      redirect_to root_path, notice: 'Not allowed to Delete 😠'
-    end
-    @payments = Payment.where(month_due: @payment.due_date.month.to_i, category: @payment.category, description: @payment.description, total_partial: @payment.total_partial)
-    @payments.destroy_all
-    redirect_to root_path, notice: 'Payment destroyed!'
-  end
 
   private
 
