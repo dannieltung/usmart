@@ -50,6 +50,18 @@ class PaymentsController < ApplicationController
     end
   end
 
+  def single_update
+    @single_partial = Payment.find(params[:id])
+    unless @single_partial.user == current_user
+      redirect_to root_path, notice: 'Not allowed to Edit 😥'
+    end
+    if @single_partial.update(payment_edit_params)
+      redirect_to payment_path(@single_partial), notice: 'Pagamento Atualizado!'
+    else
+      render :show
+    end
+  end
+
   def show_date
     @payment = Payment.find(params[:id])
     @payments = Payment.where(date: @payment.date, partial: 1).sort_by { |event| [event.category.name] }
@@ -146,6 +158,7 @@ class PaymentsController < ApplicationController
     params.require(:payment).permit(:description,
                                     :user_id,
                                     :category_id,
-                                    :comment)
+                                    :comment,
+                                    :amount)
   end
 end

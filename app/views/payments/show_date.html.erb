@@ -23,7 +23,7 @@
         <!-- <td><%= payment.date.strftime('%d/%m/%y') %></td> -->
         <td><%= payment.category.name %></td>
         <td><%= payment.description %></td>
-        <td><%= number_to_currency(payment.amount) %></td>
+        <td><%= number_to_currency(payment.total_amount) %></td>
         <td><%= payment.total_partial %></td>
         <td><%= payment.comment %></td>
       </tr>

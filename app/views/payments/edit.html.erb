@@ -1,6 +1,6 @@
 <p>Edição de um ÚNICO payment individual</p>
 <div class="container">
-  <%= simple_form_for [@user, @payment] do |f| %>
+  <%= simple_form_for [@user, @payment], url: single_update_path(@payment), method: :patch do |f| %>
     <%= f.input :date, as: :fake, label: false %>
     <%= f.input :description, label: "Descrição" %>
     <%= f.input :amount, label: "Valor" %>
