@@ -7,7 +7,7 @@ class PaymentsController < ApplicationController
       @payment.user = current_user
       @payment.partial = partial + 1
       @payment.total_amount = params[:payment][:amount]
-      @payment.amount = params[:payment][:amount].to_f / params[:payment][:total_partial].to_i
+      @payment.amount = (params[:payment][:amount].to_f / params[:payment][:total_partial].to_i).round(2)
       @payment.description = params[:payment][:description].titleize
       due_date(partial)
       @payment.month_due = @payment.due_date.month
