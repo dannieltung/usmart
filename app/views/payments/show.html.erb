@@ -21,7 +21,7 @@
       <% @payments.each do |payment| %>
         <tr>
           <td><%= payment.partial %></td>
-          <td><%= payment.due_date.strftime('%d/%m/%y') %></td>
+          <td><%= link_to payment.due_date.strftime('%d/%m/%y'), payment_due_path(payment)  %></td>
           <td id="table-link"><%= link_to number_to_currency(payment.amount), edit_payment_path(payment) %></td>
           <td><%= payment.comment %></td>
         </tr>
