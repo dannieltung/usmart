@@ -11,6 +11,7 @@ class PaymentsController < ApplicationController
       @payment.description = params[:payment][:description].titleize
       due_date(partial)
       @payment.month_due = @payment.due_date.month
+      @payment.day_due = @payment.due_date.day
       @payment.month_date = @payment.date.month
       @payment.year_date = @payment.date.year
       @payment.flag = flag
