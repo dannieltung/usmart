@@ -8,6 +8,6 @@ Rails.application.routes.draw do
   # get '/payments_category/:id', to: 'payments#show_category', as: 'payment_category'
   resources :categories, only: [:new, :create, :edit, :update, :destroy]
   resources :credit_cards, only: [:new, :create, :edit, :update, :show, :destroy]
-  resources :payments, only: [:create, :update, :show, :destroy, :edit]
+  resources :payments
   resources :buyers, only: [:new, :create, :edit, :update, :destroy]
 end

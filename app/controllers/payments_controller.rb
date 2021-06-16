@@ -1,4 +1,9 @@
 class PaymentsController < ApplicationController
+
+  def new
+    @payment = Payment.new
+  end
+
   def create
     flag = rand(1..100)
     partial = 0

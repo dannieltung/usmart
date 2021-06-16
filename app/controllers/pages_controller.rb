@@ -16,7 +16,7 @@ class PagesController < ApplicationController
 
   def actual_month(extra_month, credit_card)
     payments = @payments.select { |k| k["month_due"] == (Date.today.month + extra_month) && k["credit_card_id"] == credit_card }
-    @due_date = payments.last.due_date
+    @due_date = payments.last&.due_date
     @total_amount = 0
     payments.each do |payment|
       @total_amount += payment.amount
@@ -25,7 +25,7 @@ class PagesController < ApplicationController
 
   def plus_one_month
     payments = @payments.select { |k| k["month_due"] == (Date.today.month + 1) && k["credit_card_id"] == 2 }
-    @plus_one_due_date = payments.last.due_date
+    @plus_one_due_date = payments.last&.due_date
     @plus_one_total_amount = 0
     payments.each do |payment|
       @plus_one_total_amount += payment.amount

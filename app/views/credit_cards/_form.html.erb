@@ -1,0 +1,19 @@
+<div class="div-to-align">
+  <%= simple_form_for CreditCard.new do |f| %>
+    <div class="row">
+      <div class="col-3">
+        <%= f.input :name, label: 'Nome' %>
+      </div>
+      <div class="col-2">
+        <%= f.input :due_day, label: 'Dia do Vencimento' %>
+      </div>
+      <div class="col-2">
+        <%= f.input :best_day, label: 'Dia do Fechamento' %>
+      </div>
+      <div class="col-3">
+        <%= link_to 'Cancelar', :back, class: 'btn btn-danger btn-sm btn-block' %>
+        <%= f.submit 'Salvar', class: 'btn btn-primary btn-sm btn-block' %>
+      </div>
+    </div>
+  <% end %>
+</div>
