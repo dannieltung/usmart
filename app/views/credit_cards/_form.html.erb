@@ -1,7 +1,9 @@
 <div class="div-to-align">
   <%= simple_form_for @credit_card do |f| %>
     <% if controller.controller_name == 'credit_cards' && controller.action_name == 'edit' %>
-      teste
+      <%= link_to credit_card_path(@credit_card), method: :delete, data: { confirm: "Apagar #{@credit_card.name.titleize}? Todos os pagamentos vinculados também serão apagados...🙈" } do %>
+        <i class="far fa-trash-alt"></i>
+      <% end %>
     <% end %>
     <%= f.hidden_field :previous_url, value: @previous_url %>
     <div class="row">

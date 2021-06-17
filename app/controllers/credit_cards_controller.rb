@@ -38,6 +38,15 @@ class CreditCardsController < ApplicationController
     end
   end
 
+  def destroy
+    @credit_card = CreditCard.find(params[:id])
+    unless @credit_card.user == current_user
+      redirect_to root_path, notice: 'Ação não permitida 😥'
+    end
+    @credit_card.destroy
+    redirect_to new_credit_card_path, notice: 'Cartão de Crédito Apagado!'
+  end
+
   def show
     @credit_card = CreditCard.find(params[:id])
     @payment = Payment.where(credit_card_id: @credit_card).last
@@ -47,8 +56,6 @@ class CreditCardsController < ApplicationController
     statement
   end
 
-  def destroy
-  end
 
   private
 
