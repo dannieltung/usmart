@@ -2,3 +2,18 @@
   <h1>Criar nova Categoria</h1>
 </div>
 <%= render 'form' %>
+<br>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Nome</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @categories.each do |category| %>
+      <tr>
+        <td><%= link_to category.name.titleize, edit_category_path(category) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

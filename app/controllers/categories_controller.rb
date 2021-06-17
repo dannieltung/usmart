@@ -1,7 +1,8 @@
 class CategoriesController < ApplicationController
   def new
+    @category = Category.new
     @previous_url = request.referrer
-    @categories = Category.where(user_id: current_user.id)
+    @categories = Category.where(user_id: current_user.id).where.not(name: '').order('name ASC')
     # @categories = Category.all.sort_by { |event| [event.name] }.select do |category|
     #   category.user == current_user
     # end
