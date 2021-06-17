@@ -1,15 +1,16 @@
 class PagesController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:home]
+  # skip_before_action :authenticate_user!, only: [:home]
 
   def home
-    @payments = Payment.where("due_date > ?", (Date.today - 2.week)).sort_by { |event| [event.due_date, event.date, event.amount] }.select do |payment|
-      payment.user == current_user
-    end
-    actual_month(0, 2)
-    plus_one_month
-    # @payments = Payment.all.sort_by { |event| [event.due_date, event.date, event.amount] }.select do |payment|
+    # @payments = Payment.where("due_date > ?", (Date.today - 2.week)).sort_by { |event| [event.due_date, event.date, event.amount] }.select do |payment|
     #   payment.user == current_user
     # end
+    # actual_month(0, 2)
+    # plus_one_month
+    # # @payments = Payment.all.sort_by { |event| [event.due_date, event.date, event.amount] }.select do |payment|
+    # #   payment.user == current_user
+    # # end
+    @payments = Payment.where(user_id: current_user.id)
   end
 
   private

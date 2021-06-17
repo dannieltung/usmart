@@ -1,14 +1,18 @@
 <div class="div-to-align">
   <%= simple_form_for @payment do |f| %>
-    <%# if CreditCard.where(user_id: current_user.id).count >= 2 %>
-    <%= link_to icon("fas", "plus-circle"), new_credit_card_path %>
-    <div class="row">
-      <div class="col-4">
-        <%= f.association :credit_card, collection: CreditCard.order('name ASC'), label: 'Cartão de Crédito' %>
+    <% if CreditCard.where(user_id: current_user.id).count == 0 %>
+      <%= link_to new_credit_card_path do %>
+        <i class="fas fa-plus-circle"></i> Adicionar Cartão de Crédito
+      <% end %>
+    <% elsif CreditCard.where(user_id: current_user.id).count >= 2 %>
+      <%= link_to icon("fas", "plus-circle"), new_credit_card_path %>
+      <div class="row">
+        <div class="col-4">
+          <%= f.association :credit_card, collection: CreditCard.order('name ASC'), label: 'Cartão de Crédito' %>
+        </div>
       </div>
-    </div>
-    <%# end %>
-    <% if Buyer.where(user_id: current_user.id).count >= 1 %>
+    <% end %>
+    <% if Buyer.where(user_id: current_user.id).count >= 2 %>
       <div class="row">
         <div class="col-4">
           <%= f.association :buyer, collection: Buyer.order('name ASC'),label: 'Comprador' %>
@@ -23,7 +27,7 @@
     <%= link_to icon("fas", "plus-circle"), new_category_path %>
     <div class="row">
       <div class="col-4">
-        <%= f.association :category, collection: Category.order('name ASC'),label: 'Categoria' %>
+        <%= f.association :category, collection: Category.where(user_id: current_user.id).where.not(name: '').order('name ASC'), label: 'Categoria' %>
       </div>
     </div>
     <div class="row">
@@ -33,22 +37,25 @@
     </div>
     <div class="row">
       <div class="col-4">
-        <%= f.input :amount, label: 'Valor' %>
+        <%= f.input :total_amount, label: 'Valor' %>
       </div>
     </div>
     <div class="row">
       <div class="col-4">
-        <%= f.input :total_partial, label: '# de Parcelas' %>
+        <%= f.input :total_partial, label: 'N° de Parcelas' %>
       </div>
     </div>
     <div class="row">
       <div class="col-4">
-        <%= f.input :comment, label: 'Comentário' %>
+        <%= f.input :comment, label: 'Observação' %>
       </div>
     </div>
     <div class="row">
-      <div class="col-4">
-        <%= f.submit "Salvar", class: 'btn btn-success btn-lg btn-block' %>
+      <div class="col-2">
+        <%= link_to 'Cancelar', :back, class: 'btn btn-danger btn-sm btn-block' %>
+      </div>
+      <div class="col-2">
+        <%= f.submit "Salvar", class: 'btn btn-primary btn-sm btn-block' %>
       </div>
     </div>
   <% end %>

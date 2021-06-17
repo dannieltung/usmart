@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   put '/single_payment/:id', to: 'payments#single_update'
   # get '/payments_category/:id', to: 'payments#show_category', as: 'payment_category'
   resources :categories, only: [:new, :create, :edit, :update, :destroy]
-  resources :credit_cards, only: [:new, :create, :edit, :update, :show, :destroy]
+  resources :credit_cards, except: [:index]
   resources :payments
   resources :buyers, only: [:new, :create, :edit, :update, :destroy]
 end

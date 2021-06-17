@@ -1,5 +1,6 @@
 <div class="div-to-align">
   <%= simple_form_for Category.new do |f| %>
+    <%= f.hidden_field :previous_url, value: @previous_url %>
     <div class="row">
       <div class="col-3">
         <%= f.input :name, label: 'Nome' %>

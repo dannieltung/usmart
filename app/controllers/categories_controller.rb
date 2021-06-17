@@ -1,17 +1,20 @@
 class CategoriesController < ApplicationController
   def new
-    @categories = Category.all.sort_by { |event| [event.name] }.select do |category|
-      category.user == current_user
-    end
-    @category = Category.new
+    @previous_url = request.referrer
+    @categories = Category.where(user_id: current_user.id)
+    # @categories = Category.all.sort_by { |event| [event.name] }.select do |category|
+    #   category.user == current_user
+    # end
+    # @category = Category.new
   end
 
   def create
     @category = Category.new(categories_params)
     @category.user = current_user
-    @category.name = params[:category][:name].titleize
-    if @category.save
-      redirect_to root_path, notice: 'Category created!'
+    if @category.save && params[:category][:previous_url].include?('payments/new')
+      redirect_to new_payment_path, notice: 'Cartão de Crédito Adicionado.'
+    elsif @category.save
+      redirect_to root_path, notice: 'Cartão de Crédito Adicionado.'
     else
       render :new
     end

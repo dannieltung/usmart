@@ -1,38 +1,38 @@
 class CreditCardsController < ApplicationController
+
   def new
-    @credit_cards = CreditCard.all.sort_by { |event| [event.name] }.select do |credit_card|
-      credit_card.user == current_user
-    end
     @credit_card = CreditCard.new
+    @previous_url = request.referrer
+    @credit_cards = CreditCard.where(user_id: current_user.id)
+    # @credit_cards = CreditCard.all.sort_by { |event| [event.name] }.select do |credit_card|
+    #   credit_card.user == current_user
+    # end
   end
 
   def create
     @credit_card = CreditCard.new(credit_cards_params)
     @credit_card.user = current_user
-    @credit_card.name = params[:credit_card][:name].titleize
-    if @credit_card.save
-      redirect_to root_path, notice: 'Credit Card created!'
+    if @credit_card.save && params[:credit_card][:previous_url].include?('payments/new')
+      redirect_to new_payment_path, notice: 'Cartão de Crédito Adicionado.'
+    elsif @credit_card.save
+      redirect_to root_path, notice: 'Cartão de Crédito Adicionado.'
     else
       render :new
     end
   end
 
   def edit
-    @payment = Payment.find(params[:id])
-    @credit_card = CreditCard.find(@payment.credit_card_id)
-    unless @credit_card.user == current_user
-      redirect_to root_path, notice: 'Not allowed to Edit 😥'
-    end
-    statement
+    @credit_card = CreditCard.find(params[:id])
+    # statement
   end
 
   def update
     @credit_card = CreditCard.find(params[:id])
     unless @credit_card.user == current_user
-      redirect_to root_path, notice: 'Not allowed to Edit 😥'
+      redirect_to root_path, notice: 'Ação não permitida 😥'
     end
     if @credit_card.update(credit_cards_params)
-      redirect_to credit_card_path(@credit_card), notice: 'Credit Card Updated!'
+      redirect_to new_credit_card_path, notice: 'Cartão de Crédito Atualizado!'
     else
       render :edit
     end

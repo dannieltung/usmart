@@ -1,17 +1,26 @@
 <div class="div-to-align">
-  <%= simple_form_for CreditCard.new do |f| %>
+  <%= simple_form_for @credit_card do |f| %>
+    <%= f.hidden_field :previous_url, value: @previous_url %>
     <div class="row">
       <div class="col-3">
         <%= f.input :name, label: 'Nome' %>
       </div>
+    </div>
+    <div class="row">
       <div class="col-2">
         <%= f.input :due_day, label: 'Dia do Vencimento' %>
       </div>
-      <div class="col-2">
-        <%= f.input :best_day, label: 'Dia do Fechamento' %>
-      </div>
+    </div>
+    <div class="row">
       <div class="col-3">
+        <%= f.input :best_day, as: :date, html5: true, label: 'Próximo Fechamento de Fatura' %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-2">
         <%= link_to 'Cancelar', :back, class: 'btn btn-danger btn-sm btn-block' %>
+      </div>
+      <div class="col-2">
         <%= f.submit 'Salvar', class: 'btn btn-primary btn-sm btn-block' %>
       </div>
     </div>

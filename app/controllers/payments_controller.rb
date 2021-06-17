@@ -2,31 +2,37 @@ class PaymentsController < ApplicationController
 
   def new
     @payment = Payment.new
+    @credit_cards = CreditCard.where(user_id: current_user.id).sort_by { |event| [event.name] }
+    @buyers = Buyer.where(user_id: current_user.id).sort_by { |event| [event.name] }
+    @categories = Category.where(user_id: current_user.id).sort_by { |event| [event.name] }
   end
 
   def create
-    flag = rand(1..100)
+    flag = rand(1..1_000_000)
     partial = 0
     params[:payment][:total_partial].to_i.times do
       @payment = Payment.new(payments_params)
-      @payment.user = current_user
-      @payment.partial = partial + 1
-      @payment.total_amount = params[:payment][:amount]
-      @payment.amount = (params[:payment][:amount].to_f / params[:payment][:total_partial].to_i).round(2)
-      @payment.description = params[:payment][:description].titleize
-      due_date(partial)
-      @payment.month_due = @payment.due_date.month
-      @payment.day_due = @payment.due_date.day
-      @payment.month_date = @payment.date.month
-      @payment.year_date = @payment.date.year
       @payment.flag = flag
-      @payment.save
+      @payment.user = current_user
+      @payment.credit_card = CreditCard.find_by(user_id: current_user.id) if params[:payment][:credit_card].nil?
+      @payment.buyer = Buyer.find_by(user_id: current_user.id) if params[:payment][:buyer].nil?
+      @payment.category = Category.find_by(user_id: current_user.id) if params[:payment][:category].nil?
+      @payment.amount = (params[:payment][:total_amount].to_f / params[:payment][:total_partial].to_i).round(2)
+      @payment.partial = partial + 1
       partial += 1
+      due_date(partial)
+      @payment.save
+      #   # @payment.month_due = @payment.due_date.month
+      #   # @payment.day_due = @payment.due_date.day
+      #   # @payment.month_date = @payment.date.month
+      #   # @payment.year_date = @payment.date.year
     end
-    if @payment.save
-      redirect_to root_path, notice: 'Payment created!'
-    else
-      render :new
+    redirect_to root_path
+  end
+
+  def due_date(partial)
+    if Date.parse(params[:payment][:date]) < Date.parse(@payment.credit_card.best_day.to_s)
+      @payment.due_date = Date.parse(@payment.credit_card.due_day.to_s.rjust(2,'0')) + partial.month
     end
   end
 
@@ -107,7 +113,7 @@ class PaymentsController < ApplicationController
 
   private
 
-  def due_date(partial)
+  def xxx(partial)
     if CreditCard.find(params[:payment][:credit_card_id]).best_day > CreditCard.find(params[:payment][:credit_card_id]).due_day && Date.parse(params[:payment][:date]) >= Date.parse("#{CreditCard.find(params[:payment][:credit_card_id]).best_day}/#{Date.parse(params[:payment][:date]).month}/#{Date.parse(params[:payment][:date]).year}")
       @payment.due_date = (Date.parse(params[:payment][:date]) + (partial + 2).month).change(day: CreditCard.find(params[:payment][:credit_card_id]).due_day)
       case @payment.due_date.wday
@@ -146,8 +152,6 @@ class PaymentsController < ApplicationController
   def payments_params
     params.require(:payment).permit(:amount,
                                     :date,
-                                    :due_date,
-                                    :partial,
                                     :total_partial,
                                     :description,
                                     :user_id,

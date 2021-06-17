@@ -14,9 +14,9 @@
   <tbody>
     <% @payments.each do |payment| %>
       <tr>
-        <td id="table-link"><%= link_to payment.due_date.strftime('%d/%m'),payment_due_path(payment) %></td>
+        <td><%= payment.due_date.strftime("%d/%m/%y") %></td>
         <td><%= payment.description %></td>
-        <td id="table-link"><%= link_to number_to_currency(payment.amount), payment_path(payment) %></td>
+        <td><%= payment.amount %></td>
         <td><%= payment.partial %></td>
         <td><%= payment.total_partial %></td>
       </tr>
