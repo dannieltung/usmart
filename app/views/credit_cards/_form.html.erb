@@ -1,5 +1,8 @@
 <div class="div-to-align">
   <%= simple_form_for @credit_card do |f| %>
+    <% if controller.controller_name == 'credit_cards' && controller.action_name == 'edit' %>
+      teste
+    <% end %>
     <%= f.hidden_field :previous_url, value: @previous_url %>
     <div class="row">
       <div class="col-3">
