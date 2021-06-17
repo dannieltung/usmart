@@ -22,22 +22,38 @@ class CategoriesController < ApplicationController
   end
 
   def edit
-    @payment = Payment.find(params[:id])
-    @payments = Payment.where(month_due: @payment.date.month, category: @payment.category).sort_by { |event| [event.date] }
-    @total_amount = 0
-    @payments.each do |payment|
-      @total_amount += payment.amount
-    end
-    @category = Category.find(@payment.category_id)
-    unless @category.user == current_user
-      redirect_to root_path, notice: 'Not allowed to Edit 😥'
-    end
+    @category = Category.find(params[:id])
+    # @payment = Payment.find(params[:id])
+    # @payments = Payment.where(month_due: @payment.date.month, category: @payment.category).sort_by { |event| [event.date] }
+    # @total_amount = 0
+    # @payments.each do |payment|
+    #   @total_amount += payment.amount
+    # end
+    # @category = Category.find(@payment.category_id)
+    # unless @category.user == current_user
+    #   redirect_to root_path, notice: 'Not allowed to Edit 😥'
+    # end
   end
 
   def update
+    @category = Category.find(params[:id])
+    unless @category.user == current_user
+      redirect_to root_path, notice: 'Ação não permitida 😥'
+    end
+    if @category.update(category_params)
+      redirect_to new_category_path, notice: 'Categoria Atualizada!'
+    else
+      render :edit
+    end
   end
 
   def destroy
+    @category = Category.find(params[:id])
+    unless @category.user == current_user
+      redirect_to root_path, notice: 'Ação não permitida 😥'
+    end
+    @category.destroy
+    redirect_to new_category_path, notice: 'Categoria Apagada!'
   end
 
   private

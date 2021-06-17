@@ -1,17 +1,18 @@
-<p>Total da categoria PAGOS naquele mês de fatura com edição dos dados do cartão de crédito</p>
+<%= render 'form' %>
+<!-- <p>Total da categoria PAGOS naquele mês de fatura com edição dos dados do cartão de crédito</p>
 <br>
 <div class="show-center">
-  <h1>Total: <%= "#{number_to_currency(@total_amount)} em #{@payment.month_date}" %></h1>
+  <h1>Total: <%#= "#{number_to_currency(@total_amount)} em #{@payment.month_date}" %></h1>
   <p>
-    <%= simple_form_for [@user, @category],
+    <%#= simple_form_for [@user, @category],
       wrapper: :inline_form,
       html: { class: "form-inline" },
       wrapper_mappings: {
         boolean: :inline_boolean
       } do |f| %>
-      <%= f.input :name, hint: "Nome", input_html: { class: "mb-2 mr-sm-2" } %>
-      <%= f.submit 'Update', class: 'btn btn-success btn-lg mb-2' %>
-    <% end %>
+      <%#= f.input :name, hint: "Nome", input_html: { class: "mb-2 mr-sm-2" } %>
+      <%#= f.submit 'Update', class: 'btn btn-success btn-lg mb-2' %>
+    <%# end %>
   </p>
 </div>
 <br>
@@ -28,16 +29,16 @@
     </tr>
   </thead>
   <tbody>
-    <% @payments.each do |payment| %>
+    <%# @payments.each do |payment| %>
       <tr>
-        <td><%= payment.credit_card.name %></td>
-        <td><%= payment.date.strftime('%d/%m/%y') %></td>
-        <td><%= payment.description %></td>
-        <td><%= number_to_currency(payment.amount) %></td>
-        <td><%= payment.partial %></td>
-        <td><%= payment.total_partial %></td>
-        <td><%= payment.comment %></td>
+        <td><%#= payment.credit_card.name %></td>
+        <td><%#= payment.date.strftime('%d/%m/%y') %></td>
+        <td><%#= payment.description %></td>
+        <td><%#= number_to_currency(payment.amount) %></td>
+        <td><%#= payment.partial %></td>
+        <td><%#= payment.total_partial %></td>
+        <td><%#= payment.comment %></td>
       </tr>
-    <% end %>
+    <%# end %>
   </tbody>
-</table>
+</table> -->

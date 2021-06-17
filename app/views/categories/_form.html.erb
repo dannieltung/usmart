@@ -1,5 +1,10 @@
 <div class="div-to-align">
   <%= simple_form_for @category do |f| %>
+    <% if controller.controller_name == 'categories' && controller.action_name == 'edit' %>
+      <%= link_to category_path(@category), method: :delete, data: { confirm: "Apagar #{@category.name.titleize}? Todos os pagamentos vinculados também serão apagados...🙈" } do %>
+        <i class="far fa-trash-alt"></i>
+      <% end %>
+    <% end %>
     <%= f.hidden_field :previous_url, value: @previous_url %>
     <div class="row">
       <div class="col-3">

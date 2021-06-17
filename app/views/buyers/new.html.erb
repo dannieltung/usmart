@@ -1,11 +1,19 @@
 <div class="container">
-  <%= simple_form_for [Buyer.new] do |f| %>
-    <%= f.input :name, label: 'Nome' %>
-    <%= f.submit "Salvar", class: 'btn btn-success btn-lg btn-block' %>
-  <% end %>
-  <ul>
-    <% @buyers.each do |buyer| %>
-      <li><%= buyer.name %></li>
-    <% end %>
-  </ul>
+  <h1>Salvar novo Comprador</h1>
 </div>
+<%= render 'form' %>
+<br>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Nome</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @buyers.each do |buyer| %>
+      <tr>
+        <td><%= link_to buyer.name.titleize, edit_buyer_path(buyer) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
