@@ -10,7 +10,8 @@ class PagesController < ApplicationController
     # # @payments = Payment.all.sort_by { |event| [event.due_date, event.date, event.amount] }.select do |payment|
     # #   payment.user == current_user
     # # end
-    @payments = Payment.where(user_id: current_user.id)
+    @credit_card = CreditCard.new
+    @payments = Payment.where(user_id: current_user.id).sort_by { |event| [event.due_date] }
   end
 
   private

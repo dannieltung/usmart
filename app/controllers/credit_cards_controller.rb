@@ -3,26 +3,40 @@ class CreditCardsController < ApplicationController
   def new
     @credit_card = CreditCard.new
     @previous_url = request.referrer
-    @credit_cards = CreditCard.where(user_id: current_user.id)
     # @credit_cards = CreditCard.all.sort_by { |event| [event.name] }.select do |credit_card|
     #   credit_card.user == current_user
     # end
   end
 
+  def show
+    # @credit_card = CreditCard.find(params[:id])
+    # @payment = Payment.where(credit_card_id: @credit_card).last
+    # unless @credit_card.user == current_user
+    #   redirect_to root_path, notice: 'Not allowed to Edit 😥'
+    # end
+    # statement
+  end
+
+  def index
+    @credit_card = CreditCard.new
+    @previous_url = request.referrer
+    @credit_cards = CreditCard.where(user_id: current_user.id).sort_by { |event| [event.name] }
+  end
+
   def create
     @credit_card = CreditCard.new(credit_cards_params)
     @credit_card.user = current_user
-    if @credit_card.save && params[:credit_card][:previous_url].include?('payments/new')
-      redirect_to new_payment_path, notice: 'Cartão de Crédito Adicionado.'
-    elsif @credit_card.save
-      redirect_to root_path, notice: 'Cartão de Crédito Adicionado.'
+    if @credit_card.save
+      redirect_to params[:credit_card][:previous_url], notice: 'Cartão de Crédito Adicionado.'
     else
       render :new
+      # verificar uma forma do url não ser a url do index por contado previous url.
     end
   end
 
   def edit
     @credit_card = CreditCard.find(params[:id])
+    @payments = Payment.where(credit_card_id: params[:id]).sort_by { |event| [event.due_date] }
     # statement
   end
 
@@ -47,14 +61,6 @@ class CreditCardsController < ApplicationController
     redirect_to new_credit_card_path, notice: 'Cartão de Crédito Apagado!'
   end
 
-  def show
-    @credit_card = CreditCard.find(params[:id])
-    @payment = Payment.where(credit_card_id: @credit_card).last
-    unless @credit_card.user == current_user
-      redirect_to root_path, notice: 'Not allowed to Edit 😥'
-    end
-    statement
-  end
 
 
   private
