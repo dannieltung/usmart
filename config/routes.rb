@@ -6,8 +6,8 @@ Rails.application.routes.draw do
   patch '/single_payment/:id', to: 'payments#single_update', as: 'single_update'
   put '/single_payment/:id', to: 'payments#single_update'
   # get '/payments_category/:id', to: 'payments#show_category', as: 'payment_category'
-  resources :categories, only: [:new, :create, :edit, :update, :destroy]
-  resources :credit_cards, only: [:new, :create, :edit, :update, :show, :destroy]
-  resources :payments, only: [:create, :update, :show, :destroy, :edit]
-  resources :buyers, only: [:new, :create, :edit, :update, :destroy]
+  resources :categories
+  resources :credit_cards
+  resources :payments
+  resources :buyers
 end

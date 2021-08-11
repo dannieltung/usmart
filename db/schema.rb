@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_26_015353) do
+ActiveRecord::Schema.define(version: 2021_08_11_185052) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,8 +37,9 @@ ActiveRecord::Schema.define(version: 2021_03_26_015353) do
     t.string "name"
     t.bigint "user_id"
     t.integer "due_day"
-    t.integer "best_day"
     t.date "updated"
+    t.date "best_day"
+    t.boolean "status", default: true
     t.index ["user_id"], name: "index_credit_cards_on_user_id"
   end
 
@@ -54,7 +55,6 @@ ActiveRecord::Schema.define(version: 2021_03_26_015353) do
     t.string "description"
     t.bigint "user_id"
     t.bigint "credit_card_id"
-    t.bigint "category_id"
     t.bigint "buyer_id"
     t.float "total_amount"
     t.integer "month_due"
@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(version: 2021_03_26_015353) do
     t.integer "year_date"
     t.integer "flag"
     t.integer "day_due"
+    t.bigint "category_id"
     t.index ["buyer_id"], name: "index_payments_on_buyer_id"
     t.index ["category_id"], name: "index_payments_on_category_id"
     t.index ["credit_card_id"], name: "index_payments_on_credit_card_id"

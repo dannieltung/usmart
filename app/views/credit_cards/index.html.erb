@@ -1,0 +1,28 @@
+<%= render 'form' %>
+<br>
+<% unless @credit_cards.nil? %>
+  <table class="table container">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col"></th>
+        <th scope="col">Nome</th>
+        <th scope="col">Vencimento</th>
+        <th scope="col">Fechamento</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @credit_cards.sort_by { |event| NaturalSort(event.name) }.each do |creditcard| %>
+        <tr>
+          <td>
+            <%= link_to credit_card_path(creditcard), method: :delete, data: { confirm: "Apagar #{creditcard.name}?" } do %>
+              <i class="far fa-trash-alt"></i>
+            <% end %>
+          </td>
+          <td><%= link_to creditcard.name.titleize, edit_credit_card_path(creditcard) %></td>
+          <td><%= creditcard.due_day %></td>
+          <td><%= creditcard.best_day.strftime("%d/%m/%y") %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

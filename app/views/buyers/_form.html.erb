@@ -1,0 +1,9 @@
+<section>
+  <%= simple_form_for @buyer do |f| %>
+    <%= f.input :name, label: 'Nome' %>
+    <% unless controller.action_name == 'index' %>
+      <%= link_to 'Cancelar', :back, class: 'btn-cancel' %>
+    <% end %>
+    <%= f.submit 'Salvar', class: 'btn-save' %>
+  <% end %>
+</section>

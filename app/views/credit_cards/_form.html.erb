@@ -1,0 +1,11 @@
+<section>
+  <%= simple_form_for @credit_card do |f| %>
+    <%= f.input :name, label: 'Nome' %>
+    <%= f.input :due_day, label: 'Dia do Vencimento' %>
+    <%= f.input :best_day, as: :date, html5: true, label: 'Próximo Fechamento de Fatura' %>
+    <% unless controller.action_name == 'index' %>
+      <%= link_to 'Cancelar', :back, class: 'btn-cancel' %>
+    <% end %>
+    <%= f.submit 'Salvar', class: 'btn-save' %>
+  <% end %>
+</section>

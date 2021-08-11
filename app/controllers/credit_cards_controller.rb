@@ -1,56 +1,46 @@
 class CreditCardsController < ApplicationController
-  def new
-    @credit_cards = CreditCard.all.sort_by { |event| [event.name] }.select do |credit_card|
-      credit_card.user == current_user
-    end
+  before_action :set_credit_card, only: %i[edit update destroy]
+
+  def index
     @credit_card = CreditCard.new
+    @credit_cards = CreditCard.where(user_id: current_user.id, status: true).sort_by { |event| [event.name] }
   end
 
   def create
     @credit_card = CreditCard.new(credit_cards_params)
     @credit_card.user = current_user
-    @credit_card.name = params[:credit_card][:name].titleize
-    if @credit_card.save
-      redirect_to root_path, notice: 'Credit Card created!'
-    else
-      render :new
-    end
+    redirect_to credit_cards_path if @credit_card.save
   end
 
   def edit
-    @payment = Payment.find(params[:id])
-    @credit_card = CreditCard.find(@payment.credit_card_id)
-    unless @credit_card.user == current_user
-      redirect_to root_path, notice: 'Not allowed to Edit 😥'
-    end
-    statement
   end
 
   def update
-    @credit_card = CreditCard.find(params[:id])
     unless @credit_card.user == current_user
-      redirect_to root_path, notice: 'Not allowed to Edit 😥'
+      redirect_to root_path, notice: 'Ação não permitida 😥'
     end
     if @credit_card.update(credit_cards_params)
-      redirect_to credit_card_path(@credit_card), notice: 'Credit Card Updated!'
-    else
-      render :edit
+      redirect_to credit_cards_path, notice: 'Cartão de Crédito Atualizado!'
     end
-  end
-
-  def show
-    @credit_card = CreditCard.find(params[:id])
-    @payment = Payment.where(credit_card_id: @credit_card).last
-    unless @credit_card.user == current_user
-      redirect_to root_path, notice: 'Not allowed to Edit 😥'
-    end
-    statement
   end
 
   def destroy
+    unless @credit_card.user == current_user
+      redirect_to root_path, notice: 'Ação não permitida 😥'
+    end
+    @credit_card.update(status: false)
+    redirect_to credit_cards_path, notice: 'Cartão de Crédito Apagado!'
   end
 
   private
+
+  def set_credit_card
+    @credit_card = CreditCard.find(params[:id])
+  end
+
+  def credit_cards_params
+    params.require(:credit_card).permit(:name, :due_day, :best_day)
+  end
 
   def statement
     @payments_january = Payment.where(credit_card_id: @payment.credit_card_id,
@@ -103,7 +93,4 @@ class CreditCardsController < ApplicationController
                                        partial: 1).sort_by { |event| [event.date] }
   end
 
-  def credit_cards_params
-    params.require(:credit_card).permit(:name, :due_day, :best_day)
-  end
 end

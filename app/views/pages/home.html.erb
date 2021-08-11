@@ -1,60 +1,40 @@
-<div class="main-container">
-  <div class="form">
-    <%= simple_form_for [Payment.new] do |f| %>
-      <%= f.association :credit_card, collection: CreditCard.order('name ASC'), label: 'Cartão de Crédito' %>
-      <%= f.association :buyer, collection: Buyer.order('name ASC'),label: 'Comprador' %>
-      <%= f.input :date, as: :date, html5: true, label: 'Data' %>
-      <%= f.association :category, collection: Category.order('name ASC'),label: 'Categoria' %>
-      <%= f.input :description, label: 'Descrição' %>
-      <%= f.input :amount, label: 'Valor' %>
-      <%= f.input :total_partial, label: '# de Parcelas' %>
-      <%= f.input :comment, label: 'Comentário' %>
-      <%= f.submit "Salvar", class: 'btn btn-dark btn-lg btn-block' %>
+<br>
+<p>
+  <%= link_to 'Novo Pagamento', new_payment_path %>
+  <!-- renderizar um modal para um pagamento novo -->
+</p>
+<p>
+  <% unless CreditCard.where(user_id: current_user.id).count >= 1 %>
+  <%= link_to credit_cards_path do %>
+  <i class="fas fa-plus-circle"></i> Adicionar Cartão de Crédito
+  <% end %>
+  <% end %>
+</p>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Categoria</th>
+      <th scope="col">Vencimento</th>
+      <th scope="col">Descrição</th>
+      <th scope="col">Valor</th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @payments.each do |payment| %>
+    <tr>
+      <td><%= payment.category.name %></td>
+      <td><%= payment.due_date.strftime("%d/%m/%y") %></td>
+      <td><%= payment.description.titleize %></td>
+      <td><%= number_to_currency(payment.amount, unit: 'R$ ', separator: ',', delimiter: '.') %></td>
+      <td><%= payment.partial %></td>
+      <td><%= payment.total_partial %></td>
+    </tr>
     <% end %>
-  </div>
-  <br>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th scope="col">Vencimento</th>
-        <th scope="col">Valor</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td id="table-link"><%= @due_date.strftime('%d/%m') %></td>
-        <td id="table-link"><%= number_to_currency(@total_amount, precision: 2, unit: 'R$ ', separator: ',', delimiter: '.') %></td>
-      </tr>
-      <tr>
-        <td id="table-link"><%= @plus_one_due_date.strftime('%d/%m') %></td>
-        <td id="table-link"><%= number_to_currency(@plus_one_total_amount, precision: 2, unit: 'R$ ', separator: ',', delimiter: '.') %></td>
-      </tr>
-    </tbody>
-  </table>
-  <!-- <table class="table table-striped">
-    <thead>
-      <tr>
-        <th scope="col">Vencimento</th>
-        <th scope="col">Cartão</th>
-        <th scope="col">Comprador</th>
-        <th scope="col">Data</th>
-        <th scope="col">Categoria</th>
-        <th scope="col">Descrição</th>
-        <th scope="col">Valor</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @payments.each do |payment| %>
-        <tr>
-          <td id="table-link"><%= link_to payment.due_date.strftime('%d/%m'),payment_due_path(payment) %></td>
-          <td id="table-link"><%= link_to payment.credit_card.name, edit_credit_card_path(payment) %></td>
-          <td><%= payment.buyer.name %></td>
-          <td id="table-link"><%= link_to payment.date.strftime('%d/%m'),payment_date_path(payment) %></td>
-          <td><%= payment.category.name %></td>
-          <td><%= payment.description %></td>
-          <td id="table-link"><%= link_to number_to_currency(payment.amount), payment_path(payment) %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table> -->
-</div>
+  </tbody>
+</table>
+
+
+
+

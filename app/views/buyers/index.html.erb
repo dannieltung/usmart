@@ -1,0 +1,13 @@
+<%= render 'form' %>
+<br>
+<ul>
+  <% @buyers.each do |buyer| %>
+    <li>
+      <!-- não esta aparecendo o icone na view por conta do reset -->
+      <%= link_to buyer_path(buyer), method: :delete, data: { confirm: "Apagar #{buyer.name}?" } do %>
+        <i class="far fa-trash-alt"></i>
+      <% end %>
+      <%= link_to buyer.name, edit_buyer_path(buyer) %>
+    </li>
+  <% end %>
+</ul>
