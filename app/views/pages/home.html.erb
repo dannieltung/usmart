@@ -1,40 +1,26 @@
-<br>
-<p>
-  <%= link_to 'Novo Pagamento', new_payment_path %>
-  <!-- renderizar um modal para um pagamento novo -->
-</p>
-<p>
-  <% unless CreditCard.where(user_id: current_user.id).count >= 1 %>
-  <%= link_to credit_cards_path do %>
-  <i class="fas fa-plus-circle"></i> Adicionar Cartão de Crédito
-  <% end %>
-  <% end %>
-</p>
-<table class="table table-hover">
-  <thead>
-    <tr>
-      <th scope="col">Categoria</th>
-      <th scope="col">Vencimento</th>
-      <th scope="col">Descrição</th>
-      <th scope="col">Valor</th>
-      <th scope="col"></th>
-      <th scope="col"></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @payments.each do |payment| %>
-    <tr>
-      <td><%= payment.category.name %></td>
-      <td><%= payment.due_date.strftime("%d/%m/%y") %></td>
-      <td><%= payment.description.titleize %></td>
-      <td><%= number_to_currency(payment.amount, unit: 'R$ ', separator: ',', delimiter: '.') %></td>
-      <td><%= payment.partial %></td>
-      <td><%= payment.total_partial %></td>
-    </tr>
+<%= simple_form_for @payment do |f| %>
+  <% if @credit_cards.empty? %>
+    <%= link_to new_credit_card_path do %>
+      <i class="fas fa-plus-circle"></i> Adicionar Cartão de Crédito
     <% end %>
-  </tbody>
-</table>
-
-
-
-
+  <% elsif @credit_cards.count >= 2%>
+    <label for="resource_credit_card_id"><%= link_to 'Cartão de Crédito', credit_cards_path %></label>
+    <%= f.input :credit_card_id, label: false, collection: @credit_cards, label_method: :name, value_method: :id %>
+  <% else %>
+    <%= f.hidden_field :credit_card_id, value: @credit_cards.first.id %>
+  <% end %>
+  <%= f.input :date, label: 'Data', as: :string, input_html: { type: :date }, class: "form-control" %>
+  <%= f.input :description, label: 'Descrição' %>
+  <%= f.input :total_amount, label: 'Valor' %>
+  <%= f.input :total_partial, label: 'N° de Parcelas' %>
+  <label for="resource_category_id"><%= link_to 'Categoria', categories_path %></label>
+  <%= f.input :category_id, label: false, collection: @categories, label_method: :name, value_method: :id %>
+  <% if @buyers.count >= 2 %>
+    <label for="resource_buyer_id"><%= link_to 'Comprador', buyers_path %></label>
+    <%= f.input :buyer_id, label: false, collection: @buyers, label_method: :name, value_method: :id %>
+  <% else %>
+    <%= f.hidden_field :buyer_id, value: @buyers.first.id %>
+  <% end %>
+  <%= f.input :comment, label: 'Observação' %>
+  <%= f.submit 'Salvar', class: 'btn-save' %>
+<% end %>

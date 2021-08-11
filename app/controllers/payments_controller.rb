@@ -8,32 +8,42 @@ class PaymentsController < ApplicationController
   end
 
   def create
-    if params[:payment][:total_partial].empty?
-      installments = 1
-    else
-      installments = params[:payment][:total_partial].to_i
+    @payment = Payment.new(payments_params)
+    @payment.user = current_user
+    if params[:payment][:category_id].empty?
+      @payment.category_id = Category.first.id
     end
-    flag = rand(1..1_000_000)
-    partial = 1
-    installments.times do
-      @payment = Payment.new(payments_params)
-      @payment.flag = flag
-      @payment.user = current_user
-      @payment.credit_card = CreditCard.find_by(user_id: current_user.id) if params[:payment][:credit_card_id].nil?
-      @payment.buyer = Buyer.find_by(user_id: current_user.id) if params[:payment][:buyer_id]&.empty?
-      @payment.amount = (params[:payment][:total_amount].to_f / installments).round(2)
-      @payment.partial = partial
-      unless params[:payment][:date].empty?
-        due_date(partial)
-      end
-      partial += 1
-      @payment.save
-    end
+
     if @payment.save
       redirect_to root_path
-    else
-      render :new
     end
+
+    # if params[:payment][:total_partial].empty?
+    #   installments = 1
+    # else
+    #   installments = params[:payment][:total_partial].to_i
+    # end
+    # flag = rand(1..1_000_000)
+    # partial = 1
+    # installments.times do
+    #   @payment = Payment.new(payments_params)
+    #   @payment.flag = flag
+    #   @payment.user = current_user
+    #   @payment.credit_card = CreditCard.find_by(user_id: current_user.id) if params[:payment][:credit_card_id].nil?
+    #   @payment.buyer = Buyer.find_by(user_id: current_user.id) if params[:payment][:buyer_id]&.empty?
+    #   @payment.amount = (params[:payment][:total_amount].to_f / installments).round(2)
+    #   @payment.partial = partial
+    #   unless params[:payment][:date].empty?
+    #     due_date(partial)
+    #   end
+    #   partial += 1
+    #   @payment.save
+    # end
+    # if @payment.save
+    #   redirect_to root_path
+    # else
+    #   render :new
+    # end
   end
 
   def due_date(partial)

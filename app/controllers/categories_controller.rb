@@ -36,6 +36,10 @@ class CategoriesController < ApplicationController
     redirect_to categories_path, notice: 'Categoria Apagada!'
   end
 
+  def new
+    @category = Category.new
+  end
+
   private
 
   def set_category
