@@ -5,14 +5,15 @@
 </p>
 <p>
   <% unless CreditCard.where(user_id: current_user.id).count >= 1 %>
-    <%= link_to credit_cards_path do %>
-      <i class="fas fa-plus-circle"></i> Adicionar Cartão de Crédito
-    <% end %>
+  <%= link_to credit_cards_path do %>
+  <i class="fas fa-plus-circle"></i> Adicionar Cartão de Crédito
+  <% end %>
   <% end %>
 </p>
 <table class="table table-hover">
   <thead>
     <tr>
+      <th scope="col">Categoria</th>
       <th scope="col">Vencimento</th>
       <th scope="col">Descrição</th>
       <th scope="col">Valor</th>
@@ -22,13 +23,18 @@
   </thead>
   <tbody>
     <% @payments.each do |payment| %>
-      <tr>
-        <td><%= payment.due_date.strftime("%d/%m/%y") %></td>
-        <td><%= payment.description %></td>
-        <td><%= number_to_currency(payment.amount, unit: 'R$ ', separator: ',', delimiter: '.') %></td>
-        <td><%= payment.partial %></td>
-        <td><%= payment.total_partial %></td>
-      </tr>
+    <tr>
+      <td><%= payment.category.name %></td>
+      <td><%= payment.due_date.strftime("%d/%m/%y") %></td>
+      <td><%= payment.description.titleize %></td>
+      <td><%= number_to_currency(payment.amount, unit: 'R$ ', separator: ',', delimiter: '.') %></td>
+      <td><%= payment.partial %></td>
+      <td><%= payment.total_partial %></td>
+    </tr>
     <% end %>
   </tbody>
 </table>
+
+
+
+

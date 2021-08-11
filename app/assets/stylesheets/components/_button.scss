@@ -1,0 +1,64 @@
+.btn-edit {
+  border: 3px solid $blue;
+  padding: 5px 5px;
+  color: $blue;
+  @include tipo-2(14);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: bold;
+}
+
+.btn-destroy {
+  border: 3px solid $red;
+  padding: 5px 5px;
+  color: $red;
+  @include tipo-2(14);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: bold;
+}
+
+.btn-edit:hover,
+.btn-destroy:hover {
+  color: $black;
+}
+
+.btn-save {
+  border: 3px solid $green;
+  background-color: $green;
+  padding: 9px 20px 8px 20px;
+  color: $white;
+  @include tipo-2(14);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: bold;
+}
+
+.btn-save:hover {
+  border: solid #386641;
+  background-color: #386641;
+}
+
+.btn-cancel {
+  border: 3px solid $red;
+  background-color: $red;
+  padding: 11px 20px 10px;
+  color: $white;
+  @include tipo-2(14);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: bold;
+}
+
+.btn-cancel:hover {
+  border: solid #c81d25;
+  background-color: #c81d25;
+}
+
+.btn.btn-preto:hover {
+  /* pelo fato de estarem grudado, é para dizer que é especificamente
+  um elemento que tem essas duas classes class="btn btn-preto".
+  o grudado é proposital. */
+  color: $black;
+  border-color: $black;
+}

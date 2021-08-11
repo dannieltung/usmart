@@ -17,6 +17,7 @@ class User < ApplicationRecord
   end
 
   def safe_category
-    Category.create(name: '', user_id: id)
+    Category.create(name: 'Não Definido', user_id: id)
+    # setar o user_id da category acima com o do master
   end
 end

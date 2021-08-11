@@ -1,22 +1,9 @@
-<div class="container">
+<section>
   <%= simple_form_for @buyer do |f| %>
-    <% if controller.controller_name == 'buyers' && controller.action_name == 'edit' %>
-      <%= link_to buyer_path(@buyer), method: :delete, data: { confirm: "Apagar #{@buyer.name.titleize}? Todos os pagamentos vinculados também serão apagados...🙈" } do %>
-        <i class="far fa-trash-alt"></i>
-      <% end %>
+    <%= f.input :name, label: 'Nome' %>
+    <% unless controller.action_name == 'index' %>
+      <%= link_to 'Cancelar', :back, class: 'btn-cancel' %>
     <% end %>
-    <div class="row">
-      <div class="col-3">
-        <%= f.input :name, label: 'Nome' %>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-2">
-        <%= link_to 'Cancelar', :back, class: 'btn btn-danger btn-sm btn-block' %>
-      </div>
-      <div class="col-2">
-        <%= f.submit 'Salvar', class: 'btn btn-primary btn-sm btn-block' %>
-      </div>
-    </div>
+    <%= f.submit 'Salvar', class: 'btn-save' %>
   <% end %>
-</div>
+</section>

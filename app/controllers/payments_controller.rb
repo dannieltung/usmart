@@ -20,24 +20,20 @@ class PaymentsController < ApplicationController
       @payment.flag = flag
       @payment.user = current_user
       @payment.credit_card = CreditCard.find_by(user_id: current_user.id) if params[:payment][:credit_card_id].nil?
-      @payment.buyer = Buyer.find_by(user_id: current_user.id) if params[:payment][:buyer_id].nil?
-      @payment.category = Category.find_by(user_id: current_user.id) if params[:payment][:category_id].empty?
+      @payment.buyer = Buyer.find_by(user_id: current_user.id) if params[:payment][:buyer_id]&.empty?
       @payment.amount = (params[:payment][:total_amount].to_f / installments).round(2)
       @payment.partial = partial
       unless params[:payment][:date].empty?
         due_date(partial)
       end
-      # @payment.month_due = @payment.due_date.month
-      # @payment.day_due = @payment.due_date.day
-      # @payment.month_date = @payment.date.month
-      # @payment.year_date = @payment.date.year
-      # @payment.save
       partial += 1
-      unless @payment.save
-        render :new
-      end
+      @payment.save
     end
-    redirect_to root_path
+    if @payment.save
+      redirect_to root_path
+    else
+      render :new
+    end
   end
 
   def due_date(partial)
@@ -111,7 +107,7 @@ class PaymentsController < ApplicationController
   def destroy
     @payment = Payment.find(params[:id])
     unless @payment.user == current_user
-      redirect_to root_path, notice: 'Not allowed to Delete 😠'
+      redirect_to root_path, notice: 'Operação não autorizada 😠'
     end
     @payments = Payment.where(flag: @payment.flag, date: @payment.date, total_partial: @payment.total_partial, total_amount: @payment.total_amount)
     @payments.destroy_all

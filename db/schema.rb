@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_17_134247) do
+ActiveRecord::Schema.define(version: 2021_08_11_185052) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 2021_06_17_134247) do
     t.integer "due_day"
     t.date "updated"
     t.date "best_day"
+    t.boolean "status", default: true
     t.index ["user_id"], name: "index_credit_cards_on_user_id"
   end
 

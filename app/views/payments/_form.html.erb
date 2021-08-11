@@ -8,14 +8,15 @@
       <%= link_to icon("fas", "plus-circle"), new_credit_card_path %>
       <div class="row">
         <div class="col-4">
-          <%= f.association :credit_card, collection: CreditCard.order('name ASC'), label: 'Cartão de Crédito' %>
+          <%= f.input :credit_card_id, label: 'Cartão de Crédito', collection: @credit_cards, label_method: :name, value_method: :id %>
         </div>
       </div>
     <% end %>
     <% if Buyer.where(user_id: current_user.id).count >= 2 %>
       <div class="row">
         <div class="col-4">
-          <%= f.association :buyer, collection: Buyer.order('name ASC'),label: 'Comprador' %>
+          <%#= f.association :buyer, collection: @buyers,label: 'Comprador' %>
+          <%= f.input :buyer_id, label: 'Comprador', collection: @buyers, label_method: :name, value_method: :id %>
         </div>
       </div>
     <% end %>
@@ -27,7 +28,8 @@
     <%= link_to icon("fas", "plus-circle"), new_category_path %>
     <div class="row">
       <div class="col-4">
-        <%= f.association :category, collection: Category.where(user_id: current_user.id).where.not(name: '').order('name ASC'), label: 'Categoria' %>
+        <%#= f.association :category, collection: @categories, label: 'Categoria' %>
+        <%= f.input :category_id, label: 'Categoria', collection: @categories, label_method: :name, value_method: :id %>
       </div>
     </div>
     <div class="row">
