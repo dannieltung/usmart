@@ -1,31 +1,73 @@
 <%= simple_form_for @payment do |f| %>
   <% if @credit_cards.empty? %>
-    <%= link_to new_credit_card_path do %>
-      <i class="fas fa-plus-circle"></i> Adicionar Cartão de Crédito
-    <% end %>
+    <p>
+      <%= link_to new_credit_card_path do %>
+        <i class="fas fa-plus-circle"></i> Adicionar Cartão de Crédito
+      <% end %>
+    </p>
   <% elsif @credit_cards.count >= 2%>
-    <label for="resource_credit_card_id"><%= link_to 'Cartão de Crédito', credit_cards_path %></label>
-    <%= f.input :credit_card_id, label: false, collection: @credit_cards, label_method: :name, value_method: :id %>
+    <section>
+      <label for="credit_card_id">
+        <p><%= link_to 'Cartão de Crédito', credit_cards_path %></p>
+      </label>
+      <%= f.input :credit_card_id, label: false, collection: @credit_cards, label_method: :name, value_method: :id %>
+    </section>
   <% else %>
     <%= f.hidden_field :credit_card_id, value: @credit_cards.first.id %>
   <% end %>
-  <label for="resource_date">Data</label>
-  <%= f.input :date, label: false, as: :string, input_html: { type: :date }, class: "form-control" %>
-  <%= f.input :description, label: 'Descrição' %>
-  <label for="resource_total_amount">Valor</label>
-  <%= f.input :total_amount, label: false %>
-  <%= f.input :total_partial, label: 'N° de Parcelas' %>
-  <label for="resource_category_id"><%= link_to 'Categoria', categories_path %></label>
-  <%= f.input :category_id, label: false, collection: @categories, label_method: :name, value_method: :id %>
+  <section>
+    <label for="date">
+      <p>Data</p>
+    </label>
+    <%= f.input :date, label: false, as: :string, input_html: { type: :date }, class: "form-control" %>
+  </section>
+  <section>
+    <label for="description">
+      <p>Descrição</p>
+    </label>
+    <%= f.input :description, label: false %>
+  </section>
+  <section>
+    <label for="total_amount">
+      <p>Valor</p>
+    </label>
+    <%= f.input :total_amount, label: false %>
+  </section>
+  <section>
+    <label for="total_partial">
+      <p>N° de Parcelas</p>
+    </label>
+    <%= f.input :total_partial, label: false %>
+  </section>
+  <section>
+    <label for="category_id">
+      <p><%= link_to 'Categoria', categories_path %></p>
+    </label>
+    <%= f.input :category_id, label: false, collection: @categories, label_method: :name, value_method: :id %>
+  </section>
   <% if @buyers.count >= 2 %>
-    <label for="resource_buyer_id"><%= link_to 'Comprador', buyers_path %></label>
-    <%= f.input :buyer_id, label: false, collection: @buyers, label_method: :name, value_method: :id %>
+    <section>
+      <label for="buyer_id">
+        <p><%= link_to 'Comprador', buyers_path %></p>
+      </label>
+      <%= f.input :buyer_id, label: false, collection: @buyers, label_method: :name, value_method: :id %>
+    </section>
   <% else %>
     <%= f.hidden_field :buyer_id, value: @buyers.first.id %>
   <% end %>
   <% if controller.action_name == 'edit' %>
-    <%= f.input :due_date, label: 'Vencimento', as: :string, input_html: { type: :date }, class: "form-control" %>
+    <section>
+      <label for="due_date">
+        <p>Vencimento</p>
+      </label>
+      <%= f.input :due_date, label: 'Vencimento', as: :string, input_html: { type: :date }, class: "form-control" %>
+    </section>
   <% end %>
-  <%= f.input :comment, label: 'Observação' %>
+  <section>
+    <label for="comment">
+      <p>Observação</p>
+    </label>
+    <%= f.input :comment, label: false %>
+  </section>
   <%= f.submit 'Salvar', class: 'btn-save' %>
 <% end %>
