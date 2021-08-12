@@ -1,6 +1,11 @@
 <section>
   <%= simple_form_for @buyer do |f| %>
-    <%= f.input :name, label: 'Nome' %>
+    <section>
+      <label for="name">
+        <p>Nome</p>
+      </label>
+      <%= f.input :name, label: false %>
+    </section>
     <% unless controller.action_name == 'index' %>
       <%= link_to 'Cancelar', :back, class: 'btn-cancel' %>
     <% end %>
