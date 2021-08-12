@@ -1,1 +1,18 @@
-<%= render 'form' %>
+<%= simple_form_for @payment do |f| %>
+  <% if CreditCard.where(user_id: current_user.id).empty? %>
+    <%= link_to new_credit_card_path do %>
+      <i class="fas fa-plus-circle"></i> Adicionar Cartão de Crédito
+    <% end %>
+  <% else %>
+    <%= f.input :credit_card_id, label: 'Cartão de Crédito', collection: @credit_cards, label_method: :name, value_method: :id %>
+  <% end %>
+  <%= f.input :buyer_id, label: 'Comprador', collection: @buyers, label_method: :name, value_method: :id %>
+  <%= f.input :date, label: 'Data', as: :string, input_html: { type: :date }, class: "form-control" %>
+  <%= link_to icon("fas", "plus-circle"), new_category_path %>
+  <%= f.input :category_id, label: 'Categoria', collection: @categories, label_method: :name, value_method: :id %>
+  <%= f.input :description, label: 'Descrição' %>
+  <%= f.input :total_amount, label: 'Valor' %>
+  <%= f.input :total_partial, label: 'N° de Parcelas' %>
+  <%= f.input :comment, label: 'Observação' %>
+  <%= f.submit 'Salvar', class: 'btn-save' %>
+<% end %>

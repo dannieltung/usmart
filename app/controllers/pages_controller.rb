@@ -11,7 +11,11 @@ class PagesController < ApplicationController
     # #   payment.user == current_user
     # # end
     @credit_card = CreditCard.new
-    @payments = Payment.where(user_id: current_user.id).sort_by { |event| [event.due_date] }
+    @payment = Payment.new
+    @categories = Category.where(user_id: current_user.id).where.not(name: 'Não Definido').sort_by { |event| event.name }
+    @credit_cards = CreditCard.where(user_id: current_user.id, status: true).sort_by { |event| event.name }
+    @buyers = Buyer.where(user_id: current_user.id).sort_by { |event| event.name }
+    @payments = Payment.where(user_id: current_user.id).sort_by { |event| event.due_date }
   end
 
   private
