@@ -1,25 +1,37 @@
-<div class="navbar navbar-expand-sm navbar-light navbar-lewagon">
-  <%= link_to "Início", root_path, class: "navbar-brand" %>
+<!-- <div class="navbar navbar-expand-sm navbar-light navbar-lewagon">
+  <%#= link_to "Início", root_path, class: "navbar-brand" %>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav ml-auto">
-      <% if user_signed_in? %>
-        <li class="nav-item dropdown">
-          <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "avatar dropdown-toggle", id: "navbarDropdown", data: { toggle: "dropdown" }, 'aria-haspopup': true, 'aria-expanded': false %>
+      <%# if user_signed_in? %>
+        <li>
+          <%#= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "avatar dropdown-toggle", id: "navbarDropdown", data: { toggle: "dropdown" }, 'aria-haspopup': true, 'aria-expanded': false %>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-            <%= link_to "Cartão de Crédito", credit_cards_path, class: "dropdown-item" %>
-            <%= link_to "Categoria", categories_path, class: "dropdown-item" %>
-            <%= link_to "Comprador", buyers_path, class: "dropdown-item" %>
-            <%= link_to "Log out", destroy_user_session_path, method: :delete, class: "dropdown-item" %>
+            <%#= link_to "Cartão de Crédito", credit_cards_path, class: "dropdown-item" %>
+            <%#= link_to "Categoria", categories_path, class: "dropdown-item" %>
+            <%#= link_to "Comprador", buyers_path, class: "dropdown-item" %>
+            <%#= link_to "Log out", destroy_user_session_path, method: :delete, class: "dropdown-item" %>
           </div>
         </li>
-      <% else %>
+      <%# else %>
         <li class="nav-item">
-          <%= link_to "Login", new_user_session_path, class: "nav-link" %>
+          <%#= link_to "Login", new_user_session_path, class: "nav-link" %>
         </li>
-      <% end %>
+      <%# end %>
     </ul>
   </div>
-</div>
+</div> -->
+<header class="menu">
+  <div class="menu-container">
+    <%= link_to "Início", root_path, class: "menu-logo" %>
+    <nav>
+      <ul class="menu-nav">
+        <li><%= link_to "Cartão de Crédito", credit_cards_path %></li>
+        <li><%= link_to "Categoria", categories_path %></li>
+        <li><%= link_to "Usuário", buyers_path %></li>
+      </ul>
+    </nav>
+  </div>
+</header>

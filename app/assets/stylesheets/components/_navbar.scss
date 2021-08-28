@@ -1,12 +1,64 @@
-.navbar-lewagon {
-  justify-content: space-between;
-  background: white;
+// .header {
+//   background: #bcb8b1;
+//   display: flex;
+//   // para deixar um item ao lado do outro
+//   flex-wrap: wrap;
+//   // quando a tela ficar pequena, um vai parar embaixo do outro
+//   justify-content: space-between;
+//   align-items: center;
+//   padding: 20px;
+// }
+
+// // .header-container {
+// //   max-width: 960px;
+// // }
+
+// .menu {
+//   display: flex;
+// }
+
+// .menu li {
+//   margin-left: 10px;
+// }
+
+// .menu li a {
+//   display: block;
+//   padding: 10px;
+//   // fazer o mesmo com o logo?
+// }
+
+.menu {
+  background: #bcb8b1;
+  padding: 20px 0;
 }
 
-.navbar-lewagon .navbar-collapse {
-  flex-grow: 0;
+.menu-container {
+  max-width: 960px;
+  margin: 0 auto;
 }
 
-.navbar-lewagon .navbar-brand img {
-  width: 40px;
+.menu-container::after, .menu-container::before {
+  content: '';
+  display: table;
+  clear: both;
 }
+
+
+.menu-logo {
+  display: block;
+  float: left;
+}
+
+.menu-nav {
+  float: right;
+}
+
+.menu-nav li {
+  display: inline-block;
+  margin-left: 20px;
+}
+
+.menu-nav a {
+  display: block;
+}
+
