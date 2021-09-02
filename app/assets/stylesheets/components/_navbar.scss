@@ -1,64 +1,26 @@
-// .header {
-//   background: #bcb8b1;
-//   display: flex;
-//   // para deixar um item ao lado do outro
-//   flex-wrap: wrap;
-//   // quando a tela ficar pequena, um vai parar embaixo do outro
-//   justify-content: space-between;
-//   align-items: center;
-//   padding: 20px;
-// }
-
-// // .header-container {
-// //   max-width: 960px;
-// // }
-
-// .menu {
-//   display: flex;
-// }
-
-// .menu li {
-//   margin-left: 10px;
-// }
-
-// .menu li a {
-//   display: block;
-//   padding: 10px;
-//   // fazer o mesmo com o logo?
-// }
-
-.menu {
-  background: #bcb8b1;
-  padding: 20px 0;
+.header {
+  width: 100%;
+  background: $gray;
+  padding: 15px 0;
+  position: fixed;
+  top: 0;
 }
 
-.menu-container {
-  max-width: 960px;
-  margin: 0 auto;
+.header-menu {
+  text-align: right;
 }
 
-.menu-container::after, .menu-container::before {
-  content: '';
-  display: table;
-  clear: both;
-}
-
-
-.menu-logo {
-  display: block;
-  float: left;
-}
-
-.menu-nav {
-  float: right;
-}
-
-.menu-nav li {
+.header-menu li {
   display: inline-block;
-  margin-left: 20px;
+  margin-left: 24px;
+  margin-top: 14px;
 }
 
-.menu-nav a {
-  display: block;
+.header-menu ul li a {
+  @include tipo-2(18);
+  padding: 5px 0;
 }
 
+.header-menu ul li a:hover {
+  color: #fff;
+}

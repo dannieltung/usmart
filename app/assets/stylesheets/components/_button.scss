@@ -20,14 +20,14 @@
 
 .btn-edit:hover,
 .btn-destroy:hover {
-  color: $black;
+  color: black;
 }
 
 .btn-save {
   border: 3px solid $green;
   background-color: $green;
   padding: 9px 20px 8px 20px;
-  color: $white;
+  color: white;
   @include tipo-2(14);
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -43,7 +43,7 @@
   border: 3px solid $red;
   background-color: $red;
   padding: 10px 20px 9px;
-  color: $white;
+  color: white;
   @include tipo-2(14);
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -59,6 +59,6 @@
   /* pelo fato de estarem grudado, é para dizer que é especificamente
   um elemento que tem essas duas classes class="btn btn-preto".
   o grudado é proposital. */
-  color: $black;
-  border-color: $black;
+  color: black;
+  border-color: black;
 }
