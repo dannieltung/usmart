@@ -1,0 +1,25 @@
+<%= simple_form_for Ativo.new do |f| %>
+  <div class="ativo-form">
+    <div class="nome">
+      <label for="nome">
+        <p>Nome</p>
+      </label>
+      <%= f.input :nome, label: false %>
+    </div>
+    <div class="quantidade">
+      <label for="quantidade">
+        <p>Quantidade</p>
+      </label>
+      <%= f.input :quantidade, label: false %>
+    </div>
+    <div class="preco">
+      <label for="preco">
+        <p>Preço</p>
+      </label>
+      <%= f.input :preco, label: false %>
+    </div>
+    <div class="submit">
+      <%= f.submit 'Salvar', class: 'btn-save' %>
+    </div>
+  </div>
+<% end %>

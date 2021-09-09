@@ -15,38 +15,27 @@ p {
   margin-top: 120px;
 }
 
-.table tr th {
-  @include tipo-2(18);
-  text-align: center;
+.flexbox {
+  display: flex;
 }
 
-.table tr td {
-  font-size: 16px;
-  text-align: center;
+.formulario {
+  margin-left: 5px;
 }
 
-.introducao-interna {
-  width: 100%;
-  margin-top: 92px;
-  /* esse é o tamanho exato da nossa header. precisamos fazer isso pois o header esta como position fixed. */
-  height: 160px;
-  text-align: center;
-  color: $white;
-  padding-top: 30px;
+.tabela {
+  margin-top: 10px;
+  margin-left: 310px;
 }
 
-.introducao-interna h1 {
-  @include tipo-1(36);
-  color: $white;
-  font-weight: bold;
-  text-transform: uppercase;
+// ativo index
+
+.ativo-form {
+  display: flex;
+  justify-content: space-between;
 }
 
-.introducao-interna h1:after {
-  content: "";
-  display: block;
-  width: 60px;
-  height: 3px;
-  background: $white;
-  margin: 6px auto 10px auto;
+.submit {
+  margin-top: 32px;
 }
+

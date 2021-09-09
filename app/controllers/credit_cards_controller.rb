@@ -1,6 +1,10 @@
 class CreditCardsController < ApplicationController
   before_action :set_credit_card, only: %i[edit update destroy]
 
+  def new
+    @credit_card = CreditCard.new
+  end
+
   def index
     @credit_card = CreditCard.new
     @credit_cards = CreditCard.where(user_id: current_user.id, status: true).sort_by { |event| [event.name] }

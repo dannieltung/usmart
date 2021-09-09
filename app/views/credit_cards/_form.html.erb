@@ -1,8 +1,23 @@
 <section>
   <%= simple_form_for @credit_card do |f| %>
-    <%= f.input :name, label: 'Nome' %>
-    <%= f.input :due_day, label: 'Dia do Vencimento' %>
-    <%= f.input :best_day, as: :date, html5: true, label: 'Próximo Fechamento de Fatura' %>
+    <section>
+      <label for="name">
+        <p>Nome</p>
+      </label>
+      <%= f.input :name, label: false %>
+    </section>
+    <section>
+      <label for="due_day">
+        <p>Dia do Vencimento</p>
+      </label>
+      <%= f.input :due_day, label: false %>
+    </section>
+    <section>
+      <label for="best_day">
+        <p>Próximo Fechamento de Fatura</p>
+      </label>
+      <%= f.input :best_day, as: :date, html5: true, label: false %>
+    </section>
     <% unless controller.action_name == 'index' %>
       <%= link_to 'Cancelar', :back, class: 'btn-cancel' %>
     <% end %>

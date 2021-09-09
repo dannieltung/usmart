@@ -1,12 +1,27 @@
-.navbar-lewagon {
-  justify-content: space-between;
-  background: white;
+.header {
+  width: 100%;
+  background: $gray;
+  padding: 15px 0;
+  position: fixed;
+  top: 0;
 }
 
-.navbar-lewagon .navbar-collapse {
-  flex-grow: 0;
+
+.header-menu {
+  text-align: right;
 }
 
-.navbar-lewagon .navbar-brand img {
-  width: 40px;
+.header-menu li {
+  display: inline-block;
+  margin-left: 24px;
+  margin-top: 14px;
+}
+
+.header-menu ul li a {
+  @include tipo-2(18);
+  padding: 5px 0;
+}
+
+.header-menu ul li a:hover {
+  color: #fff;
 }
