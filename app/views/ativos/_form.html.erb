@@ -1,11 +1,5 @@
 <%= simple_form_for Ativo.new do |f| %>
   <div class="ativo-form">
-    <div class="tipo">
-      <label for="tipo">
-        <p>Tipo</p>
-      </label>
-      <%= f.input :tipo_id, label: false, collection: @tipos, label_method: :nome, value_method: :id %>
-    </div>
     <div class="nome">
       <label for="nome">
         <p>Nome</p>

@@ -1,7 +1,6 @@
 class AtivosController < ApplicationController
   def index
-    @tipos = Tipo.where(user_id: current_user.id)
-    @ativos = Ativo.where(user_id: current_user.id)
+    @ativos = Ativo.where(user_id: current_user.id).sort_by { |ativo| ativo.created_at }.reverse
   end
 
   def create
@@ -15,8 +14,7 @@ class AtivosController < ApplicationController
   private
 
   def ativo_params
-    params.require(:ativo).permit(:tipo_id,
-                                  :nome,
+    params.require(:ativo).permit(:nome,
                                   :quantidade,
                                   :preco)
   end

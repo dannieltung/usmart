@@ -1,6 +1,5 @@
 class Ativo < ApplicationRecord
   belongs_to :user
-  belongs_to :tipo
 
   before_create :ajuste
 

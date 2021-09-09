@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_09_205939) do
+ActiveRecord::Schema.define(version: 2021_09_09_211646) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,8 +23,6 @@ ActiveRecord::Schema.define(version: 2021_09_09_205939) do
     t.float "preco"
     t.float "emolumentos"
     t.bigint "user_id"
-    t.bigint "tipo_id"
-    t.index ["tipo_id"], name: "index_ativos_on_tipo_id"
     t.index ["user_id"], name: "index_ativos_on_user_id"
   end
 
@@ -104,7 +102,6 @@ ActiveRecord::Schema.define(version: 2021_09_09_205939) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "ativos", "tipos"
   add_foreign_key "ativos", "users"
   add_foreign_key "buyers", "users"
   add_foreign_key "categories", "users"
