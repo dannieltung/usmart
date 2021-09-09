@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_09_170944) do
+ActiveRecord::Schema.define(version: 2021_09_09_205939) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,7 +21,6 @@ ActiveRecord::Schema.define(version: 2021_09_09_170944) do
     t.string "nome"
     t.integer "quantidade"
     t.float "preco"
-    t.float "liquidacao"
     t.float "emolumentos"
     t.bigint "user_id"
     t.bigint "tipo_id"

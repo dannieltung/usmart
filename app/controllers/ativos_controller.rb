@@ -1,7 +1,7 @@
 class AtivosController < ApplicationController
   def index
     @tipos = Tipo.where(user_id: current_user.id)
-    @ativos = Ativo.all
+    @ativos = Ativo.where(user_id: current_user.id)
   end
 
   def create
