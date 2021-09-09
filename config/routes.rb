@@ -10,4 +10,7 @@ Rails.application.routes.draw do
   resources :credit_cards
   resources :payments
   resources :buyers
+
+  resources :tipos
+  resources :ativos
 end

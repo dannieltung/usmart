@@ -10,10 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_11_185052) do
+ActiveRecord::Schema.define(version: 2021_09_09_170944) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "ativos", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "nome"
+    t.integer "quantidade"
+    t.float "preco"
+    t.float "liquidacao"
+    t.float "emolumentos"
+    t.bigint "user_id"
+    t.bigint "tipo_id"
+    t.index ["tipo_id"], name: "index_ativos_on_tipo_id"
+    t.index ["user_id"], name: "index_ativos_on_user_id"
+  end
 
   create_table "buyers", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
@@ -69,6 +83,14 @@ ActiveRecord::Schema.define(version: 2021_08_11_185052) do
     t.index ["user_id"], name: "index_payments_on_user_id"
   end
 
+  create_table "tipos", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "nome"
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_tipos_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -83,6 +105,8 @@ ActiveRecord::Schema.define(version: 2021_08_11_185052) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "ativos", "tipos"
+  add_foreign_key "ativos", "users"
   add_foreign_key "buyers", "users"
   add_foreign_key "categories", "users"
   add_foreign_key "credit_cards", "users"
@@ -90,4 +114,5 @@ ActiveRecord::Schema.define(version: 2021_08_11_185052) do
   add_foreign_key "payments", "categories"
   add_foreign_key "payments", "credit_cards"
   add_foreign_key "payments", "users"
+  add_foreign_key "tipos", "users"
 end
