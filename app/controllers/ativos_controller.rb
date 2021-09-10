@@ -1,6 +1,6 @@
 class AtivosController < ApplicationController
   def index
-    @ativos = Ativo.where(user_id: current_user.id).sort_by { |ativo| ativo.created_at }.reverse
+    @unique_ativos = Ativo.where(user_id: current_user.id).uniq { |ativo| ativo.nome }.sort_by { |ativo| ativo.nome }
   end
 
   def create
@@ -9,6 +9,11 @@ class AtivosController < ApplicationController
     if @ativo.save
       redirect_to ativos_path
     end
+  end
+
+  def show
+    ativo = Ativo.find(params[:id])
+    @ativos = Ativo.where(nome: ativo.nome)
   end
 
   private
