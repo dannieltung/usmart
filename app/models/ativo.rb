@@ -10,6 +10,7 @@ class Ativo < ApplicationRecord
     unless quantidade.nil?
       self.emolumentos = quantidade * preco * (0.0300/100)
       self.preco = (quantidade * preco + self.emolumentos)/quantidade
+      self.total = quantidade * self.preco
     end
   end
 end
