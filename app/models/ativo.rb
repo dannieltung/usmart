@@ -7,7 +7,9 @@ class Ativo < ApplicationRecord
 
   def ajuste
     self.nome = nome.upcase
-    self.emolumentos = quantidade * preco * (0.0300/100)
-    self.preco = (quantidade * preco + self.emolumentos)/quantidade
+    unless quantidade.nil?
+      self.emolumentos = quantidade * preco * (0.0300/100)
+      self.preco = (quantidade * preco + self.emolumentos)/quantidade
+    end
   end
 end

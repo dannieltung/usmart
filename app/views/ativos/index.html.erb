@@ -13,8 +13,10 @@
         <% @unique_ativos.each do |ativo| %>
           <tr>
             <td><%= link_to ativo.nome, ativo_path(ativo) %></td>
-            <td><%= Ativo.where(nome: ativo.nome).map { |ativo| ativo.quantidade }.sum %></td>
-            <td><%= number_to_currency(Ativo.where(nome: ativo.nome).map { |ativo| ativo.preco }.then { |a| a.sum.to_f / a.size } , unit: 'R$ ', separator: ',', delimiter: '.') %></td>
+            <td><%= Ativo.where(nome: ativo.nome).where.not(quantidade: nil).map { |ativo| ativo.quantidade }.sum %></td>
+            <% incomes = Ativo.where(nome: ativo.nome, quantidade: nil) %>
+            <% stocks = Ativo.where(nome: ativo.nome).where.not(quantidade: nil) %>
+            <td><%= number_to_currency(stocks.map { |ativo| ativo.total }.then { |a| (a.sum.to_f - incomes.map { |ativo| ativo.preco}.sum) / stocks.map { |ativo| ativo.quantidade}.sum }, unit: 'R$ ', separator: ',', delimiter: '.') %></td>
           </tr>
         <% end %>
       </tbody>

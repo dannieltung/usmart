@@ -13,7 +13,15 @@ class AtivosController < ApplicationController
 
   def show
     ativo = Ativo.find(params[:id])
-    @ativos = Ativo.where(nome: ativo.nome)
+    @ativos = Ativo.where(nome: ativo.nome).sort_by { |ativo| ativo.created_at }.reverse
+  end
+
+  def edit
+    @ativo = Ativo.find(params[:id])
+  end
+
+  def update
+
   end
 
   private
