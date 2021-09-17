@@ -32,9 +32,13 @@
           <td><sup>R$</sup> <%= number_to_currency(ativo.preco, unit: '', separator: ',', delimiter: '.') %></td>
           <% if ativo.emolumentos != nil %>
             <td><sup>R$</sup> <%= number_to_currency(ativo.emolumentos, unit: '', separator: ',', delimiter: '.') %></td>
+          <% else %>
+            <%= nil %>
           <% end %>
           <% if ativo.total != nil %>
             <td><sup>R$</sup> <%= number_to_currency(ativo.total, unit: '', separator: ',', delimiter: '.') %></td>
+          <% else %>
+            <%= nil %>
           <% end %>
         </tr>
       <% end %>
