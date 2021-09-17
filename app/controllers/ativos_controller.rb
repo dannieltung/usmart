@@ -14,6 +14,8 @@ class AtivosController < ApplicationController
   def show
     ativo = Ativo.find(params[:id])
     @ativos = Ativo.where(nome: ativo.nome).sort_by { |ativo| ativo.created_at }.reverse
+    @incomes = Ativo.where(nome: ativo.nome, quantidade: nil).map { |ativo| ativo.preco }.sum
+    @stocks = Ativo.where(nome: ativo.nome).where.not(quantidade: nil).map { |ativo| ativo.total }.sum
   end
 
   def edit

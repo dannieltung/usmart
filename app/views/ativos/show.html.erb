@@ -1,4 +1,8 @@
 <section class="introducao container">
+  <section>
+    <p><%= number_to_currency(@stocks, unit: 'R$ ', separator: ',', delimiter: '.') %></p>
+    <p><%= number_to_currency(@incomes, unit: 'R$ ', separator: ',', delimiter: '.') %></p>
+  </section>
   <table class="table table-hover">
     <thead>
       <tr>

@@ -1,25 +1,38 @@
 <section class="introducao container">
-  <%= render 'form' %>
-  <div>
-    <table class="table table-hover">
-      <thead>
+  <%= simple_form_for Ativo.new, defaults: { input_html: { class: 'input-styling' } } do |f| %>
+    <div class="form-ativo">
+      <div class="form-nome">
+        <%= f.input :nome, label: false, placeholder: 'Ativo' %>
+      </div>
+      <div class="form-quantidade">
+        <%= f.input :quantidade, label: false, placeholder: 'Quantidade' %>
+      </div>
+      <div class="form-preco">
+        <%= f.input :preco, label: false, placeholder: 'Valor' %>
+      </div>
+      <div class="form-submit">
+        <%= f.submit 'Salvar', class: 'btn-save' %>
+      </div>
+    </div>
+  <% end %>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Nome</th>
+        <th scope="col">Quantidade</th>
+        <th scope="col">Médio</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @unique_ativos.each do |ativo| %>
         <tr>
-          <th scope="col">Nome</th>
-          <th scope="col">Quantidade</th>
-          <th scope="col">Médio</th>
+          <td><%= link_to ativo.nome, ativo_path(ativo) %></td>
+          <td><%= Ativo.where(nome: ativo.nome).where.not(quantidade: nil).map { |ativo| ativo.quantidade }.sum %></td>
+          <% incomes = Ativo.where(nome: ativo.nome, quantidade: nil) %>
+          <% stocks = Ativo.where(nome: ativo.nome).where.not(quantidade: nil) %>
+          <td><sup>R$</sup> <%= number_to_currency(stocks.map { |ativo| ativo.total }.then { |a| (a.sum&.to_f - incomes.map { |ativo| ativo.preco}.sum) / stocks.map { |ativo| ativo.quantidade}.sum },unit: '', separator: ',', delimiter: '.') %></td>
         </tr>
-      </thead>
-      <tbody>
-        <% @unique_ativos.each do |ativo| %>
-          <tr>
-            <td><%= link_to ativo.nome, ativo_path(ativo) %></td>
-            <td><%= Ativo.where(nome: ativo.nome).where.not(quantidade: nil).map { |ativo| ativo.quantidade }.sum %></td>
-            <% incomes = Ativo.where(nome: ativo.nome, quantidade: nil) %>
-            <% stocks = Ativo.where(nome: ativo.nome).where.not(quantidade: nil) %>
-            <td><%= number_to_currency(stocks.map { |ativo| ativo.total }.then { |a| (a.sum&.to_f - incomes.map { |ativo| ativo.preco}.sum) / stocks.map { |ativo| ativo.quantidade}.sum }, unit: 'R$ ', separator: ',', delimiter: '.') %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
+      <% end %>
+    </tbody>
+  </table>
 </section>

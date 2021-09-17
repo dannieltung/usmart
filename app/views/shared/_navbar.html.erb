@@ -1,13 +1,16 @@
 <header class="header">
-  <div class="container">
-    <%= link_to image_tag("https://res.cloudinary.com/dannieltung/image/upload/v1630539954/bikcraft_wwmxqe.svg", alt: "Trikalias"), root_path, class: "grid-4" %>
-    <nav class="header-menu grid-12">
+  <div class="menu">
+    <div class="menu-logo">
+      <%= link_to 'USmart', root_path %>
+    </div>
+    <nav class='menu-nav'>
       <ul>
         <li><%= link_to "Cartão de Crédito", credit_cards_path %></li>
         <li><%= link_to "Categoria", categories_path %></li>
-        <li><%= link_to "Mercado", ativos_path %></li>
+        <li><%= link_to "Mercado Financeiro", ativos_path %></li>
         <li><%= link_to "Usuário", buyers_path %></li>
       </ul>
     </nav>
   </div>
 </header>
+<%#= link_to image_tag("https://res.cloudinary.com/dannieltung/image/upload/v1630539954/bikcraft_wwmxqe.svg", alt: "Trikalias"), root_path, class: "grid-4" %>
