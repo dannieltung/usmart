@@ -1,8 +1,23 @@
 <section class="introducao container">
-  <table class="table table-hover">
+  <h1><%= @ativo.nome %></h1>
+  <div class="extrato-resumo">
+    <section>
+      <p>Quantidade</p>
+      <p><%= number_with_delimiter(@stocks_quantity,delimiter: '.') %></p>
+    </section>
+    <section>
+      <p>Investido</p>
+      <p><%= number_to_currency(@stocks_value, unit: 'R$ ', separator: ',', delimiter: '.') %></p>
+    </section>
+    <section>
+      <p>Rendimento</p>
+      <p><%= number_to_currency(@stocks_income, unit: 'R$ ', separator: ',', delimiter: '.') %> (<%= number_to_percentage(@porcentagem, precision: 2,separator: ',') %>)</p>
+    </section>
+  </div>
+  <table class="table">
     <thead>
       <tr>
-        <th scope="col">Nome</th>
+        <th scope="col">Data</th>
         <th scope="col">Quantidade</th>
         <th scope="col">Valor</th>
         <th scope="col">Tarifas</th>
@@ -12,11 +27,15 @@
     <tbody>
       <% @ativos.each do |ativo| %>
         <tr>
-          <td><%= link_to ativo.nome, ativo_path(ativo) %></td>
+          <td><%= ativo.created_at.strftime("%d/%m/%y") %></td>
           <td><%= ativo.quantidade %></td>
-          <td><%= number_to_currency(ativo.preco, unit: 'R$ ', separator: ',', delimiter: '.') %></td>
-          <td><%= number_to_currency(ativo.emolumentos, unit: 'R$ ', separator: ',', delimiter: '.') %></td>
-          <td><%= number_to_currency(ativo.total, unit: 'R$ ', separator: ',', delimiter: '.') %></td>
+          <td><sup>R$</sup> <%= number_to_currency(ativo.preco, unit: '', separator: ',', delimiter: '.') %></td>
+          <% if ativo.emolumentos != nil %>
+            <td><sup>R$</sup> <%= number_to_currency(ativo.emolumentos, unit: '', separator: ',', delimiter: '.') %></td>
+          <% end %>
+          <% if ativo.total != nil %>
+            <td><sup>R$</sup> <%= number_to_currency(ativo.total, unit: '', separator: ',', delimiter: '.') %></td>
+          <% end %>
         </tr>
       <% end %>
     </tbody>

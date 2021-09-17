@@ -11,9 +11,9 @@ p {
   @include tipo-2(14);
 }
 
-.introducao {
-  margin-top: 120px;
-}
+// .introducao {
+//   margin-top: 120px;
+// }
 
 .flexbox {
   display: flex;
@@ -28,14 +28,5 @@ p {
   margin-left: 310px;
 }
 
-// ativo index
 
-.ativo-form {
-  display: flex;
-  justify-content: space-between;
-}
-
-.submit {
-  margin-top: 32px;
-}
 
