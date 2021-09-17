@@ -12,10 +12,12 @@ class AtivosController < ApplicationController
   end
 
   def show
-    ativo = Ativo.find(params[:id])
-    @ativos = Ativo.where(nome: ativo.nome).sort_by { |ativo| ativo.created_at }.reverse
-    @incomes = Ativo.where(nome: ativo.nome, quantidade: nil).map { |ativo| ativo.preco }.sum
-    @stocks = Ativo.where(nome: ativo.nome).where.not(quantidade: nil).map { |ativo| ativo.total }.sum
+    @ativo = Ativo.find(params[:id])
+    @ativos = Ativo.where(nome: @ativo.nome).sort_by { |ativo| ativo.created_at }.reverse
+    @stocks_income = Ativo.where(nome: @ativo.nome, quantidade: nil).map { |ativo| ativo.preco }.sum
+    @stocks_value = Ativo.where(nome: @ativo.nome).where.not(quantidade: nil).map { |ativo| ativo.total }.sum
+    @stocks_quantity = Ativo.where(nome: @ativo.nome).where.not(quantidade: nil).map { |ativo| ativo.quantidade }.sum
+    @porcentagem = (@stocks_income / @stocks_value) * 100
   end
 
   def edit
