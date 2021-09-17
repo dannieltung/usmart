@@ -1,6 +1,14 @@
-<section class="container introducao flexbox">
+<section class="container introducao">
   <div class='formulario'>
-    <%= render 'payments/form' %>
+    <%= simple_form_for @payment do |f| %>
+      <%= f.input :date, label: false, as: :string, input_html: { type: :date } %>
+      <%= f.input :total_amount, label: false, placeholder: 'Valor' %>
+      <%= f.input :total_partial, label: false, placeholder: 'Parcelas' %>
+      <%= f.input :description, label: false, placeholder: 'Descrição' %>
+      <%= link_to icon("fas", "plus-circle"), categories_path, title: 'Adicionar Categoria' %>
+      <%= f.input :category_id, label: false, collection: @categories, label_method: :name, value_method: :id, prompt: '--Categoria--' %>
+      <%= f.input :comment, label: false, placeholder: 'Observação' %>
+    <% end %>
   </div>
   <div class='tabela'>
     <table class="table table-hover">

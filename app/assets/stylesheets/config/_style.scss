@@ -11,21 +11,21 @@ p {
   @include tipo-2(14);
 }
 
-// .introducao {
-//   margin-top: 120px;
+// .flexbox {
+//   display: flex;
 // }
 
-.flexbox {
-  display: flex;
-}
+// .formulario {
+//   margin-left: 5px;
+// }
 
-.formulario {
-  margin-left: 5px;
-}
+// .tabela {
+//   margin-top: 10px;
+//   margin-left: 310px;
+// }
 
-.tabela {
-  margin-top: 10px;
-  margin-left: 310px;
+.introducao {
+  padding-top: 20px;
 }
 
 
