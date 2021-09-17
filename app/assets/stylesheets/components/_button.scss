@@ -24,9 +24,10 @@
 }
 
 .btn-save {
-  border: 3px solid $green;
+  border-style: none;
   background-color: $green;
-  padding: 9px 20px 8px 20px;
+  padding: 12px 10px 15px;
+  border-radius: 10px;
   color: white;
   @include tipo-2(14);
   text-transform: uppercase;
