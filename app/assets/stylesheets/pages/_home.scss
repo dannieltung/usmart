@@ -1,6 +1,7 @@
 .categorias {
   display: flex;
   justify-content: space-between;
+  align-items: baseline;
 }
 
 .main-card {
@@ -15,7 +16,7 @@
 .btn-save-home {
   border-style: none;
   background-color: $green;
-  padding: 12px 87px 15px;
+  padding: 12px 87px;
   border-radius: 10px;
   color: white;
   @include tipo-2(14);
