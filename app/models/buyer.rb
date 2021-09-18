@@ -1,6 +1,6 @@
 class Buyer < ApplicationRecord
   belongs_to :user
-  has_many :payments
+
 
   validates :name, presence: true, :length => { :minimum => 2 }, :uniqueness => true
 

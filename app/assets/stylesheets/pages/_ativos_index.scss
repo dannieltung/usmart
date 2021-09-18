@@ -9,17 +9,11 @@
 .input-styling {
   border: 4px solid $black;
   border-radius: 10px;
-  font-size: 20px;
+  font-size: 18px;
   background: transparent;
 }
 
 .input-styling::placeholder {
-  color: $black;
-  opacity: 0.3;
-  font-size: 18px;
-}
-
-.input-styling::prompt {
   color: $black;
   opacity: 0.3;
   font-size: 18px;
@@ -44,10 +38,5 @@
 .form-submit {
   flex: 1 1 160px;
   margin: 0 10px;
-}
-
-.teste {
-  opacity: 0.1;
-  color: red;
 }
 
