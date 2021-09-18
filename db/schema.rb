@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_10_014640) do
+ActiveRecord::Schema.define(version: 2021_09_18_003357) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,7 +67,6 @@ ActiveRecord::Schema.define(version: 2021_09_10_014640) do
     t.date "date"
     t.string "description"
     t.bigint "user_id"
-    t.bigint "credit_card_id"
     t.bigint "buyer_id"
     t.float "total_amount"
     t.integer "month_due"
@@ -78,7 +77,6 @@ ActiveRecord::Schema.define(version: 2021_09_10_014640) do
     t.bigint "category_id"
     t.index ["buyer_id"], name: "index_payments_on_buyer_id"
     t.index ["category_id"], name: "index_payments_on_category_id"
-    t.index ["credit_card_id"], name: "index_payments_on_credit_card_id"
     t.index ["user_id"], name: "index_payments_on_user_id"
   end
 
@@ -110,7 +108,6 @@ ActiveRecord::Schema.define(version: 2021_09_10_014640) do
   add_foreign_key "credit_cards", "users"
   add_foreign_key "payments", "buyers"
   add_foreign_key "payments", "categories"
-  add_foreign_key "payments", "credit_cards"
   add_foreign_key "payments", "users"
   add_foreign_key "tipos", "users"
 end

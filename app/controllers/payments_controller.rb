@@ -21,7 +21,7 @@ class PaymentsController < ApplicationController
       @payment.category_id = Category.first.id if params[:payment][:category_id].empty?
       @payment.partial = partial
       @payment.amount = (params[:payment][:total_amount].to_f / parcelas).round(2)
-      due_date(partial)
+      # due_date(partial)
       @payment.flag = flag
       @payment.save
       partial += 1
