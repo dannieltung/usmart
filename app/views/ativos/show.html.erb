@@ -1,5 +1,6 @@
 <section class="introducao container">
   <h1><%= @ativo.nome %></h1>
+  <%= link_to icon("fas", "trash-alt"), ativo_path(@ativo), method: :delete, data: { confirm: "Apagar #{@ativo.nome}?" }, title: 'Apagar Ativo' %>
   <div class="extrato-resumo">
     <section>
       <p>Quantidade</p>
@@ -14,12 +15,17 @@
       <p><%= number_to_currency(@stocks_income, unit: 'R$ ', separator: ',', delimiter: '.') %> (<%= number_to_percentage(@porcentagem, precision: 2,separator: ',') %>)</p>
     </section>
   </div>
+  <%= form_tag create_sold_path, :method => "post" do %>
+    <%= number_field_tag :quantidade, nil, placeholder: "Quantidade" %>
+    <%= number_field_tag :preco, nil, placeholder: "Valor", step: :any %>
+    <%= button_tag 'Vender', :value => @ativo.id %>
+  <% end %>
   <table class="table">
     <thead>
       <tr>
         <th scope="col">Data</th>
         <th scope="col">Quantidade</th>
-        <th scope="col">Valor</th>
+        <th scope="col">Médio</th>
         <th scope="col">Tarifas</th>
         <th scope="col">Total</th>
       </tr>

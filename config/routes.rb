@@ -13,4 +13,6 @@ Rails.application.routes.draw do
 
   resources :tipos
   resources :ativos
+
+  post '/ativos_sold', to: 'ativos#create_sold', as: 'create_sold'
 end
