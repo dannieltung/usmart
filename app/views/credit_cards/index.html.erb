@@ -1,4 +1,11 @@
-<%= render 'form' %>
+<section class="container credit-card-form">
+  <%= simple_form_for CreditCard.new do |f| %>
+    <%= f.input_field :name, label: false, placeholder: 'Nome' %>
+    <%= f.input_field :due_day, label: false, placeholder: 'Fechamento' %>
+    <%= f.input_field :best_day, as: :date, html5: true, label: false %>
+    <%= f.button :submit, 'Salvar' %>
+  <% end %>
+</section>
 <br>
 <% unless @credit_cards.nil? %>
   <table class="table container">

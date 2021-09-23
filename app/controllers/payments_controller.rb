@@ -1,11 +1,11 @@
 class PaymentsController < ApplicationController
 
-  def new
-    @payment = Payment.new
-    @credit_cards = CreditCard.where(user_id: current_user.id).sort_by { |event| [event.name] }
-    @buyers = Buyer.where(user_id: current_user.id).sort_by { |event| [event.name] }
-    @categories = Category.where(user_id: current_user.id).sort_by { |event| [event.name] }
-  end
+  # def new
+  #   @payment = Payment.new
+  #   @credit_cards = CreditCard.where(user_id: current_user.id).sort_by { |event| [event.name] }
+  #   @buyers = Buyer.where(user_id: current_user.id).sort_by { |event| [event.name] }
+  #   @categories = Category.where(user_id: current_user.id).sort_by { |event| [event.name] }
+  # end
 
   def create
     if params[:payment][:total_partial].empty?
@@ -21,7 +21,7 @@ class PaymentsController < ApplicationController
       @payment.category_id = Category.first.id if params[:payment][:category_id].empty?
       @payment.partial = partial
       @payment.amount = (params[:payment][:total_amount].to_f / parcelas).round(2)
-      # due_date(partial)
+      due_date(partial)
       @payment.flag = flag
       @payment.save
       partial += 1

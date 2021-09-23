@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_21_213310) do
+ActiveRecord::Schema.define(version: 2021_09_23_153028) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -74,7 +74,9 @@ ActiveRecord::Schema.define(version: 2021_09_21_213310) do
     t.integer "flag"
     t.integer "day_due"
     t.bigint "category_id"
+    t.bigint "credit_card_id"
     t.index ["category_id"], name: "index_payments_on_category_id"
+    t.index ["credit_card_id"], name: "index_payments_on_credit_card_id"
     t.index ["user_id"], name: "index_payments_on_user_id"
   end
 
@@ -105,6 +107,7 @@ ActiveRecord::Schema.define(version: 2021_09_21_213310) do
   add_foreign_key "categories", "users"
   add_foreign_key "credit_cards", "users"
   add_foreign_key "payments", "categories"
+  add_foreign_key "payments", "credit_cards"
   add_foreign_key "payments", "users"
   add_foreign_key "tipos", "users"
 end

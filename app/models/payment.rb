@@ -1,6 +1,7 @@
 class Payment < ApplicationRecord
   belongs_to :user
   belongs_to :category
+  belongs_to :credit_card
 
 
   validates :date, presence: true

@@ -1,5 +1,6 @@
 <section class="container introducao main-card">
   <%= simple_form_for Payment.new, defaults: { input_html: { class: 'input-styling' } } do |f| %>
+    <%= f.input :credit_card_id, label: false, collection: @credit_cards, label_method: :name, value_method: :id, prompt: 'Cartão de Crédito' %>
     <%= f.input :date, label: false, as: :string, input_html: { type: :date } %>
     <%= f.input :total_amount, label: false, placeholder: 'Valor' %>
     <%= f.input :total_partial, label: false, placeholder: 'Parcelas' %>
@@ -17,6 +18,7 @@
     <table class="table table-hover">
       <thead>
         <tr>
+          <th scope="col">Vencimento</th>
           <th scope="col">Descrição</th>
           <th scope="col">Valor</th>
           <th scope="col"></th>
@@ -26,6 +28,7 @@
       <tbody>
         <% @payments.each do |payment| %>
           <tr>
+            <td><%= payment.due_date.strftime('%d/%m/%y') %></td>
             <td><%= link_to payment.description, edit_payment_path(payment) %></td>
             <td><sup>R$</sup> <%= number_to_currency(payment.amount, unit: '', separator: ',', delimiter: '.') %></td>
             <td><%= payment.partial %></td>
