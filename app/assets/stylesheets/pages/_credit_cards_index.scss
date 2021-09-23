@@ -1,3 +1,39 @@
-.credit-card-form {
+.input-forms {
+  display: flex;
+  padding: 10px 0;
+}
 
+.name-input input {
+  border: 4px solid $black;
+  border-radius: 10px;
+  font-size: 18px;
+  background: transparent;
+  padding: 8px;
+  width: 170px;
+}
+
+.vencimento-input {
+  padding-left: 20px;
+}
+
+.vencimento-input input {
+  border: 4px solid $black;
+  border-radius: 10px;
+  font-size: 18px;
+  background: transparent;
+  padding: 8px;
+  width: 50px;
+}
+
+.fechamento-input {
+  padding-left: 20px;
+}
+
+.fechamento-input input {
+  border: 4px solid $black;
+  border-radius: 10px;
+  font-size: 18px;
+  background: transparent;
+  padding: 5px;
+  width: 170px;
 }

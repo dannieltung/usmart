@@ -1,13 +1,21 @@
-<%= render 'form' %>
-<br>
-<ul>
-  <% @categories.each do |category| %>
-    <li>
-      <!-- não esta aparecendo o icone na view por conta do reset -->
-      <%= link_to category_path(category), method: :delete, data: { confirm: "Apagar #{category.name}?" } do %>
-        <i class="far fa-trash-alt"></i>
-      <% end %>
-      <%= link_to category.name, edit_category_path(category) %>
-    </li>
+<section class="container">
+  <%= simple_form_for Category.new do |f| %>
+    <div class="input-forms">
+      <div class="name-input">
+        <p>Nome</p>
+        <p><%= f.input_field :name, label: false, class: 'input' %></p>
+      </div>
+      <%= f.button :submit, 'Salvar' %>
+    </div>
   <% end %>
-</ul>
+  <ul>
+    <% @categories.each do |category| %>
+      <li>
+        <%= link_to category_path(category), method: :delete, data: { confirm: "Apagar #{category.name}?" } do %>
+          <i class="far fa-trash-alt"></i>
+        <% end %>
+        <%= link_to category.name, edit_category_path(category) %>
+      </li>
+    <% end %>
+  </ul>
+</section>

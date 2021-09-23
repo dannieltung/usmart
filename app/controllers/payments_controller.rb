@@ -30,9 +30,9 @@ class PaymentsController < ApplicationController
   end
 
   def due_date(partial)
-    if (Date.parse(params[:payment][:date]) >= Date.parse(@payment.credit_card.best_day.to_s)) && (@payment.credit_card.due_day < @payment.credit_card.best_day.day)
+    if (Date.parse(params[:payment][:date]) >= Date.parse(@payment.credit_card.best_day.to_s)) && (@payment.credit_card.due_day.to_i < @payment.credit_card.best_day.day)
       @payment.due_date = Date.parse(@payment.credit_card.due_day.to_s.rjust(2,'0')) + (partial + 1).month
-    elsif (Date.parse(params[:payment][:date]) < Date.parse(@payment.credit_card.best_day.to_s)) && (@payment.credit_card.due_day > @payment.credit_card.best_day.day)
+    elsif (Date.parse(params[:payment][:date]) < Date.parse(@payment.credit_card.best_day.to_s)) && (@payment.credit_card.due_day.to_i > @payment.credit_card.best_day.day)
       @payment.due_date = Date.parse(@payment.credit_card.due_day.to_s.rjust(2,'0')) + (partial - 1).month
     else
       @payment.due_date = Date.parse(@payment.credit_card.due_day.to_s.rjust(2,'0')) + partial.month
