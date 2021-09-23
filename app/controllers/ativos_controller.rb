@@ -8,18 +8,26 @@ class AtivosController < ApplicationController
     @ativo.user = current_user
     @ativo.incomes = false
     if @ativo.save
-      redirect_to ativos_path
+      redirect_to ativo_path(@ativo)
     end
   end
 
   def create_sold
     ativo = Ativo.find(params[:button])
-    sold = Ativo.new(user_id: current_user.id,
-                     nome: ativo.nome,
-                     quantidade: params[:quantidade].to_i * -1,
-                     preco: params[:preco])
-    if sold.save
-      redirect_to ativo_path(ativo)
+    @ativo = Ativo.new(user_id: current_user.id,
+                       nome: ativo.nome,
+                       quantidade: params[:quantidade].to_i * -1,
+                       preco: params[:preco])
+    if @ativo.save
+      incomes = Ativo.where(nome: @ativo.nome, quantidade: nil).map { |ativo| ativo.preco }.sum
+      stocks_quantity = Ativo.where(nome: @ativo.nome, incomes: false).map { |ativo| ativo.quantidade }.sum
+      stocks_value = Ativo.where(nome: @ativo.nome, incomes: false).map { |ativo| ativo.total }.sum
+      preco = @ativo.total - (stocks_quantity * ((stocks_value - incomes) / stocks_quantity))
+      Ativo.create(user_id: current_user.id,
+                   nome: @ativo.nome,
+                   quantidade: nil,
+                   preco: preco)
+      redirect_to ativo_path(@ativo)
     end
   end
 
