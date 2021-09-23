@@ -15,11 +15,13 @@
       <p><%= number_to_currency(@stocks_income, unit: 'R$ ', separator: ',', delimiter: '.') %> (<%= number_to_percentage(@porcentagem, precision: 2,separator: ',') %>)</p>
     </section>
   </div>
-  <%= form_tag create_sold_path, :method => "post" do %>
-    <%= number_field_tag :quantidade, nil, placeholder: "Quantidade" %>
-    <%= number_field_tag :preco, nil, placeholder: "Valor", step: :any %>
-    <%= button_tag 'Vender', :value => @ativo.id %>
-  <% end %>
+  <div class="form-tag-position">
+    <%= form_tag create_sold_path, :method => "post" do %>
+      <%= number_field_tag :quantidade, nil, placeholder: "Quantidade", class: 'form-tag-styling' %>
+      <%= number_field_tag :preco, nil, placeholder: "Valor", step: :any, class: 'form-tag-styling' %>
+      <%= button_tag 'Vender', :value => @ativo.id, class: 'form-tag-button' %>
+    <% end %>
+  </div>
   <table class="table">
     <thead>
       <tr>
