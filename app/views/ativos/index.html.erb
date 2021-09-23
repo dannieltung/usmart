@@ -20,7 +20,8 @@
       <tr>
         <th scope="col">Nome</th>
         <th scope="col">Quantidade</th>
-        <th scope="col">Médio</th>
+        <th scope="col">V. Médio</th>
+        <th scope="col">Último V. Pago</th>
       </tr>
     </thead>
     <tbody>
@@ -29,8 +30,9 @@
           <td><%= link_to ativo.nome, ativo_path(ativo) %></td>
           <td><%= Ativo.where(nome: ativo.nome).where.not(quantidade: nil).map { |ativo| ativo.quantidade }.sum %></td>
           <% incomes = Ativo.where(nome: ativo.nome, quantidade: nil) %>
-          <% stocks = Ativo.where(nome: ativo.nome).where.not(quantidade: nil) %>
+          <% stocks = Ativo.where(nome: ativo.nome, incomes: false) %>
           <td><sup>R$</sup> <%= number_to_currency(stocks.map { |ativo| ativo.total }.then { |a| (a.sum&.to_f - incomes.map { |ativo| ativo.preco}.sum) / stocks.map { |ativo| ativo.quantidade}.sum },unit: '', separator: ',', delimiter: '.') %></td>
+          <td><sup>R$</sup> <%= number_to_currency(stocks.last.preco, unit: '', separator: ',', delimiter: '.') %></td>
         </tr>
       <% end %>
     </tbody>

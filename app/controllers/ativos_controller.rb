@@ -6,27 +6,50 @@ class AtivosController < ApplicationController
   def create
     @ativo = Ativo.new(ativo_params)
     @ativo.user = current_user
+    @ativo.incomes = false
     if @ativo.save
-      redirect_to ativos_path
+      redirect_to ativo_path(@ativo)
     end
   end
+
+  def create_sold
+    ativo = Ativo.find(params[:button])
+    @ativo = Ativo.new(user_id: current_user.id,
+                       nome: ativo.nome,
+                       quantidade: params[:quantidade].to_i * -1,
+                       preco: params[:preco])
+    if @ativo.save
+      incomes = Ativo.where(nome: @ativo.nome, quantidade: nil).map { |ativo| ativo.preco }.sum
+      stocks_quantity = Ativo.where(nome: @ativo.nome, incomes: false).map { |ativo| ativo.quantidade }.sum
+      stocks_value = Ativo.where(nome: @ativo.nome, incomes: false).map { |ativo| ativo.total }.sum
+      preco = @ativo.total - (stocks_quantity * ((stocks_value - incomes) / stocks_quantity))
+      Ativo.create(user_id: current_user.id,
+                   nome: @ativo.nome,
+                   quantidade: nil,
+                   preco: preco)
+      redirect_to ativo_path(@ativo)
+    end
+  end
+
 
   def show
     @ativo = Ativo.find(params[:id])
     @ativos = Ativo.where(nome: @ativo.nome).sort_by { |ativo| ativo.created_at }.reverse
     @stocks_income = Ativo.where(nome: @ativo.nome, quantidade: nil).map { |ativo| ativo.preco }.sum
-    @stocks_value = Ativo.where(nome: @ativo.nome).where.not(quantidade: nil).map { |ativo| ativo.total }.sum
+    @stocks_value = Ativo.where(nome: @ativo.nome, incomes: false).map { |ativo| ativo.total }.sum
     @stocks_quantity = Ativo.where(nome: @ativo.nome).where.not(quantidade: nil).map { |ativo| ativo.quantidade }.sum
     @porcentagem = (@stocks_income / @stocks_value) * 100
   end
 
-  def edit
-    @ativo = Ativo.find(params[:id])
+  def destroy
+    ativo = Ativo.find(params[:id])
+    unless ativo.user == current_user
+      redirect_to root_path, notice: 'Ação não permitida 😥'
+    end
+    Ativo.where(nome: ativo.nome).each { |ativo| ativo.destroy }
+    redirect_to ativos_path, notice: 'Ativo Apagado'
   end
 
-  def update
-
-  end
 
   private
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_10_014640) do
+ActiveRecord::Schema.define(version: 2021_09_23_190739) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 2021_09_10_014640) do
     t.float "emolumentos"
     t.bigint "user_id"
     t.float "total"
-    t.boolean "dividendos"
+    t.boolean "incomes", default: true
     t.index ["user_id"], name: "index_ativos_on_user_id"
   end
 
@@ -49,7 +49,7 @@ ActiveRecord::Schema.define(version: 2021_09_10_014640) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "name"
     t.bigint "user_id"
-    t.integer "due_day"
+    t.string "due_day"
     t.date "updated"
     t.date "best_day"
     t.boolean "status", default: true
@@ -67,8 +67,6 @@ ActiveRecord::Schema.define(version: 2021_09_10_014640) do
     t.date "date"
     t.string "description"
     t.bigint "user_id"
-    t.bigint "credit_card_id"
-    t.bigint "buyer_id"
     t.float "total_amount"
     t.integer "month_due"
     t.integer "month_date"
@@ -76,7 +74,7 @@ ActiveRecord::Schema.define(version: 2021_09_10_014640) do
     t.integer "flag"
     t.integer "day_due"
     t.bigint "category_id"
-    t.index ["buyer_id"], name: "index_payments_on_buyer_id"
+    t.bigint "credit_card_id"
     t.index ["category_id"], name: "index_payments_on_category_id"
     t.index ["credit_card_id"], name: "index_payments_on_credit_card_id"
     t.index ["user_id"], name: "index_payments_on_user_id"
@@ -108,7 +106,6 @@ ActiveRecord::Schema.define(version: 2021_09_10_014640) do
   add_foreign_key "buyers", "users"
   add_foreign_key "categories", "users"
   add_foreign_key "credit_cards", "users"
-  add_foreign_key "payments", "buyers"
   add_foreign_key "payments", "categories"
   add_foreign_key "payments", "credit_cards"
   add_foreign_key "payments", "users"

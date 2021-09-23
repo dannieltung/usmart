@@ -2,7 +2,6 @@ class CategoriesController < ApplicationController
   before_action :set_category, only: %i[edit update destroy]
 
   def index
-    @category = Category.new
     @categories = Category.where(user_id: current_user.id).where.not(name: 'Não Definido').order('name ASC')
   end
 
